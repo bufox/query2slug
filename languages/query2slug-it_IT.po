@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Query2Slug 1.0.0\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wp-query2slug\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/query2slug\n"
 "Last-Translator: Bufox <info@bufox.it>\n"
 "Language-Team: Italian\n"
 "MIME-Version: 1.0\n"
