@@ -1,0 +1,54 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout tag
+        uses: actions/checkout@v4
+
+      - name: Build release zip
+        run: |
+          mkdir -p /tmp/query2slug
+          git archive HEAD --format=tar | tar -x -C /tmp/query2slug
+
+          # Remove files listed in .distignore
+          cd /tmp/query2slug
+          while IFS= read -r pattern; do
+            pattern="$(echo "$pattern" | tr -d '\r' | sed 's/[[:space:]]*$//')"
+            [ -z "$pattern" ] && continue
+            [[ "$pattern" == \#* ]] && continue
+            rm -rf $pattern 2>/dev/null
+          done < .distignore
+          rm -f .distignore
+
+          cd /tmp
+          zip -r query2slug.zip query2slug/
+
+      - name: Extract changelog
+        id: changelog
+        run: |
+          # Extract the changelog for this version from readme.txt
+          VERSION="${GITHUB_REF_NAME#v}"
+          CHANGELOG=$(awk "/^= ${VERSION} =/{found=1; next} /^= [0-9]/{if(found) exit} found{print}" readme.txt)
+          if [ -z "$CHANGELOG" ]; then
+            CHANGELOG="Release ${VERSION}"
+          fi
+          # Write to output using delimiter
+          echo "body<<CHANGELOG_EOF" >> "$GITHUB_OUTPUT"
+          echo "$CHANGELOG" >> "$GITHUB_OUTPUT"
+          echo "CHANGELOG_EOF" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Query2Slug ${{ github.ref_name }}
+          body: ${{ steps.changelog.outputs.body }}
+          files: /tmp/query2slug.zip

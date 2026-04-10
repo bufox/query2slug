@@ -1,0 +1,293 @@
+/* Query2Slug Admin Styles */
+
+/* ---- Rules list table: column widths ---- */
+
+.wp-list-table .column-slug {
+	width: 25%;
+}
+
+.wp-list-table .column-url {
+	width: 30%;
+}
+
+/* ---- Rules list table ---- */
+
+.q2s-status-active {
+	color: #00a32a;
+}
+
+.q2s-status-inactive {
+	color: #b32d2e;
+}
+
+.q2s-toggle-status {
+	cursor: pointer;
+	padding: 0;
+	border: none;
+	background: none;
+}
+
+.q2s-toggle-status:hover .dashicons {
+	transform: scale(1.2);
+	transition: transform 0.15s ease;
+}
+
+.q2s-toggle-status .dashicons {
+	font-size: 20px;
+	width: 20px;
+	height: 20px;
+	transition: transform 0.15s ease;
+}
+
+/* Filter badges in list view */
+.q2s-filter-badge {
+	display: inline-block;
+	background: #f0f0f1;
+	border: 1px solid #dcdcde;
+	border-radius: 3px;
+	padding: 2px 6px;
+	margin: 1px 3px 1px 0;
+	font-family: monospace;
+	font-size: 11px;
+	line-height: 1.5;
+	color: #2c3338;
+	word-break: break-all;
+}
+
+.q2s-filter-badge .q2s-filter-key {
+	color: #2271b1;
+	font-weight: 600;
+}
+
+/* URL column */
+.q2s-url-cell {
+	font-family: monospace;
+	font-size: 12px;
+	color: #50575e;
+	word-break: break-all;
+}
+
+.q2s-url-cell a {
+	text-decoration: none;
+	color: #50575e;
+}
+
+.q2s-url-cell a:hover {
+	color: #2271b1;
+}
+
+/* Row actions */
+.q2s-row-actions {
+	white-space: nowrap;
+}
+
+.q2s-row-actions .q2s-delete {
+	color: #b32d2e;
+}
+
+.q2s-row-actions .q2s-delete:hover {
+	color: #a00;
+}
+
+/* ---- Edit page: slug field ---- */
+
+#q2s-rule-form #titlediv #titlewrap input {
+	padding: 6px 10px;
+	font-size: 1.4em;
+	height: auto;
+}
+
+#q2s-slug-status {
+	font-weight: 500;
+	font-size: 13px;
+}
+
+#q2s-slug-status.q2s-available {
+	color: #00a32a;
+}
+
+#q2s-slug-status.q2s-taken {
+	color: #b32d2e;
+}
+
+#q2s-slug-status.q2s-checking {
+	color: #666;
+}
+
+#q2s-slug-sanitized {
+	color: #996800;
+	font-size: 12px;
+	font-style: italic;
+	margin-left: 8px;
+}
+
+#q2s-url-preview {
+	font-family: monospace;
+	font-size: 13px;
+	background: #f6f7f7;
+	padding: 6px 10px;
+	border-radius: 3px;
+	border: 1px solid #dcdcde;
+	display: inline-block;
+	margin-top: 6px;
+}
+
+#q2s-url-preview strong {
+	color: #2271b1;
+}
+
+/* ---- Edit page: filter editor ---- */
+
+.q2s-filter-row {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 8px;
+}
+
+.q2s-filter-row .regular-text {
+	width: 280px;
+}
+
+.q2s-filter-eq {
+	font-weight: bold;
+	font-size: 18px;
+	color: #999;
+	flex-shrink: 0;
+}
+
+.q2s-remove-filter {
+	flex-shrink: 0;
+	color: #b32d2e !important;
+	border-color: #b32d2e !important;
+}
+
+.q2s-remove-filter:hover {
+	background: #b32d2e !important;
+	color: #fff !important;
+}
+
+#q2s-add-filter {
+	margin-top: 4px;
+}
+
+/* ---- Edit page: sidebar publish box ---- */
+
+#q2s-rule-form .misc-pub-section {
+	padding: 8px 10px;
+}
+
+#q2s-rule-form .misc-pub-section select {
+	margin-left: 4px;
+}
+
+#q2s-rule-form #major-publishing-actions {
+	padding: 8px 10px;
+	border-top: 1px solid #dcdcde;
+	background: #f6f7f7;
+}
+
+/* ---- Settings page ---- */
+
+/* Prefix collision check */
+.q2s-prefix-status {
+	display: block;
+	margin-top: 6px;
+	font-weight: 500;
+	font-size: 13px;
+}
+
+.q2s-prefix-ok {
+	color: #00a32a;
+}
+
+.q2s-prefix-warning {
+	color: #b32d2e;
+}
+
+.q2s-prefix-status.q2s-checking {
+	color: #666;
+}
+
+#q2s-prefix-example {
+	font-family: monospace;
+	font-size: 13px;
+	background: #f6f7f7;
+	padding: 6px 10px;
+	border-radius: 3px;
+	border: 1px solid #dcdcde;
+	display: inline-block;
+	margin-top: 6px;
+}
+
+#q2s-prefix-example strong {
+	color: #2271b1;
+}
+
+.q2s-overview-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.q2s-overview-list li {
+	padding: 6px 0;
+	border-bottom: 1px solid #f0f0f1;
+	font-size: 13px;
+}
+
+.q2s-overview-list li:last-child {
+	border-bottom: none;
+}
+
+.q2s-overview-list .dashicons {
+	font-size: 16px;
+	width: 16px;
+	height: 16px;
+	margin-right: 6px;
+	vertical-align: text-bottom;
+}
+
+/* ---- Empty state ---- */
+
+.q2s-empty-state {
+	text-align: center;
+	padding: 40px 20px;
+}
+
+.q2s-empty-state .dashicons {
+	font-size: 48px;
+	width: 48px;
+	height: 48px;
+	color: #c3c4c7;
+	margin-bottom: 12px;
+}
+
+.q2s-empty-state p {
+	font-size: 14px;
+	color: #646970;
+	margin-bottom: 16px;
+}
+
+/* ---- Responsive ---- */
+
+@media screen and (max-width: 782px) {
+	/* Filter editor: stack vertically */
+	.q2s-filter-row {
+		flex-wrap: wrap;
+	}
+
+	.q2s-filter-row .regular-text {
+		width: 100%;
+	}
+
+	.q2s-filter-eq {
+		display: none;
+	}
+
+	/* URL preview */
+	#q2s-url-preview {
+		font-size: 11px;
+		word-break: break-all;
+	}
+}

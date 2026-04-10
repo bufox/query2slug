@@ -1,0 +1,15 @@
+vendor/
+node_modules/
+.wp-env/
+dist/
+*.log
+.DS_Store
+TODO.md
+.phpunit.result.cache
+chatgpt-conversation.md
+PRELAUNCH.md
+CLAUDE.md
+REQUIREMENTS.md
+WP-STANDARDS.md
+.wp-env.json
+Makefile
