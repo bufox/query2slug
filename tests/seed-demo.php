@@ -1,7 +1,7 @@
 <?php
 /**
  * Demo seed script for Q2S screenshots/GIFs.
- * Run with: npx @wordpress/env run cli wp eval-file /var/www/html/wp-content/plugins/wp-query2slug/tests/seed-demo.php
+ * Run with: npx @wordpress/env run cli wp eval-file /var/www/html/wp-content/plugins/query2slug/tests/seed-demo.php
  */
 
 // Safety check.

@@ -1,7 +1,7 @@
 <?php
 /**
  * Add featured images to demo posts and products.
- * Run with: npx @wordpress/env run cli wp eval-file /var/www/html/wp-content/plugins/wp-query2slug/tests/seed-images.php
+ * Run with: npx @wordpress/env run cli wp eval-file /var/www/html/wp-content/plugins/query2slug/tests/seed-images.php
  *
  * Uses picsum.photos (CC0, no auth) with curated IDs for realistic results.
  */
