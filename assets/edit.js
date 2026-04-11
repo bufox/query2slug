@@ -17,9 +17,9 @@
 
 		// Show feedback if input was modified by sanitization.
 		if (raw !== slug && slug.length > 0) {
-			$('#q2s-slug-sanitized').text(q2sEdit.strings.sanitized).show();
+			$('#q2s-slug-sanitized').text(q2sEdit.strings.sanitized).removeClass('q2s-slug-sanitized-hidden');
 		} else {
-			$('#q2s-slug-sanitized').hide();
+			$('#q2s-slug-sanitized').addClass('q2s-slug-sanitized-hidden');
 		}
 
 		clearTimeout(slugCheckTimer);

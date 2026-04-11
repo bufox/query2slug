@@ -29,9 +29,9 @@ class Q2S_Rules_Table extends WP_List_Table {
 			$this->get_primary_column_name(),
 		);
 
-		$this->items = Q2S_DB::get_rules();
-
 		$this->process_bulk_action();
+
+		$this->items = Q2S_DB::get_rules();
 	}
 
 	/**
@@ -80,9 +80,8 @@ class Q2S_Rules_Table extends WP_List_Table {
 				esc_html__( 'Edit', 'query2slug' )
 			),
 			'delete' => sprintf(
-				'<a href="%s" class="q2s-delete" onclick="return confirm(\'%s\');">%s</a>',
+				'<a href="%s" class="q2s-delete">%s</a>',
 				esc_url( $delete_url ),
-				esc_js( __( 'Delete this rule?', 'query2slug' ) ),
 				esc_html__( 'Delete', 'query2slug' )
 			),
 		);
@@ -146,7 +145,42 @@ class Q2S_Rules_Table extends WP_List_Table {
 	 * Handle bulk actions.
 	 */
 	public function process_bulk_action(): void {
-		// Bulk actions are handled in Q2S_Admin::handle_form_submissions().
+		$action = $this->current_action();
+
+		if ( ! $action ) {
+			return;
+		}
+
+		check_admin_referer( 'bulk-' . $this->_args['plural'] );
+
+		if ( ! current_user_can( 'manage_options' ) ) {
+			wp_die( esc_html__( 'Unauthorized.', 'query2slug' ) );
+		}
+
+		$ids = isset( $_POST['q2s_rule_ids'] ) && is_array( $_POST['q2s_rule_ids'] )
+			? array_map( 'absint', $_POST['q2s_rule_ids'] )
+			: array();
+
+		if ( empty( $ids ) ) {
+			return;
+		}
+
+		foreach ( $ids as $rule_id ) {
+			switch ( $action ) {
+				case 'activate':
+					Q2S_DB::set_status( $rule_id, 1 );
+					break;
+				case 'deactivate':
+					Q2S_DB::set_status( $rule_id, 0 );
+					break;
+				case 'delete':
+					Q2S_DB::delete_rule( $rule_id );
+					break;
+			}
+		}
+
+		wp_safe_redirect( admin_url( 'admin.php?page=q2s-rules&message=bulk_done' ) );
+		exit;
 	}
 
 	/**

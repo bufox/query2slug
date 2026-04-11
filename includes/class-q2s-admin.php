@@ -124,6 +124,9 @@ class Q2S_Admin {
 			wp_localize_script( 'q2s-list', 'q2sList', array(
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
 				'nonce'   => wp_create_nonce( 'q2s_admin' ),
+				'strings' => array(
+					'confirmDelete' => __( 'Delete this rule?', 'query2slug' ),
+				),
 			) );
 		}
 
@@ -250,46 +253,8 @@ class Q2S_Admin {
 			exit;
 		}
 
-		// Handle bulk actions (WP_List_Table uses 'action' / 'action2' field names).
-		// Skip if this is an AJAX request — 'action' is used by WP AJAX for the handler name.
-		if ( ! wp_doing_ajax() ) {
-			$bulk_action = '';
-			if ( isset( $_POST['action'] ) && '-1' !== $_POST['action'] ) {
-				$bulk_action = sanitize_text_field( wp_unslash( $_POST['action'] ) );
-			} elseif ( isset( $_POST['action2'] ) && '-1' !== $_POST['action2'] ) {
-				$bulk_action = sanitize_text_field( wp_unslash( $_POST['action2'] ) );
-			}
-		} else {
-			$bulk_action = '';
-		}
-
-		if ( $bulk_action && isset( $_POST['q2s_rule_ids'] ) && is_array( $_POST['q2s_rule_ids'] ) ) {
-			check_admin_referer( 'bulk-rules' );
-
-			if ( ! current_user_can( 'manage_options' ) ) {
-				wp_die( esc_html__( 'Unauthorized.', 'query2slug' ) );
-			}
-
-			$action = $bulk_action;
-			$ids    = array_map( 'absint', $_POST['q2s_rule_ids'] );
-
-			foreach ( $ids as $rule_id ) {
-				switch ( $action ) {
-					case 'activate':
-						Q2S_DB::set_status( $rule_id, 1 );
-						break;
-					case 'deactivate':
-						Q2S_DB::set_status( $rule_id, 0 );
-						break;
-					case 'delete':
-						Q2S_DB::delete_rule( $rule_id );
-						break;
-				}
-			}
-
-			wp_safe_redirect( admin_url( 'admin.php?page=q2s-rules&message=bulk_done' ) );
-			exit;
-		}
+		// Bulk actions are handled by Q2S_Rules_Table::process_bulk_action()
+		// inside prepare_items(), following the standard WP_List_Table pattern.
 	}
 
 	/**
@@ -372,7 +337,7 @@ class Q2S_Admin {
 								</div>
 								<div class="inside">
 									<span id="q2s-slug-status"></span>
-									<span id="q2s-slug-sanitized" style="display:none;"></span>
+									<span id="q2s-slug-sanitized" class="q2s-slug-sanitized-hidden"></span>
 									<p id="q2s-url-preview">
 										<?php echo esc_html( home_url( '/' . $prefix . '/' ) ); ?><strong id="q2s-slug-preview"><?php echo esc_html( $slug ?: '...' ); ?></strong>/
 									</p>

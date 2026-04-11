@@ -2,6 +2,13 @@
 (function ($) {
 	'use strict';
 
+	// Confirm before deleting a rule.
+	$(document).on('click', '.q2s-delete', function (e) {
+		if (!confirm(q2sList.strings.confirmDelete)) {
+			e.preventDefault();
+		}
+	});
+
 	// Toggle rule status via AJAX.
 	$(document).on('click', '.q2s-toggle-status', function () {
 		var $btn   = $(this);

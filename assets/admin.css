@@ -114,6 +114,10 @@
 	color: #666;
 }
 
+.q2s-slug-sanitized-hidden {
+	display: none;
+}
+
 #q2s-slug-sanitized {
 	color: #996800;
 	font-size: 12px;

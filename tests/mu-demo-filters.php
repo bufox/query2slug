@@ -13,6 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+if ( class_exists( 'Q2S_Demo_Filter_Widget' ) ) {
+	return;
+}
+
 class Q2S_Demo_Filter_Widget extends WP_Widget {
 
 	public function __construct() {
