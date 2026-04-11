@@ -1,0 +1,13 @@
+{
+	"plugins": [
+		".",
+		"https://downloads.wordpress.org/plugin/woocommerce.latest-stable.zip"
+	],
+	"mappings": {
+		"wp-content/mu-plugins/demo-filters.php": "./tests/mu-demo-filters.php"
+	},
+	"config": {
+		"WP_DEBUG": true,
+		"WP_DEBUG_LOG": true
+	}
+}
