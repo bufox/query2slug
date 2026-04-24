@@ -13,15 +13,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( class_exists( 'Q2S_Demo_Filter_Widget' ) ) {
+if ( class_exists( 'Q2SLUG_Demo_Filter_Widget' ) ) {
 	return;
 }
 
-class Q2S_Demo_Filter_Widget extends WP_Widget {
+class Q2SLUG_Demo_Filter_Widget extends WP_Widget {
 
 	public function __construct() {
 		parent::__construct(
-			'q2s_demo_filters',
+			'q2slug_demo_filters',
 			'Shop Filters',
 			array( 'description' => 'Filter by category + tag (demo)' )
 		);
@@ -53,10 +53,10 @@ class Q2S_Demo_Filter_Widget extends WP_Widget {
 		echo $args['before_widget'];
 		echo $args['before_title'] . esc_html( $instance['title'] ?? 'Shop Filters' ) . $args['after_title'];
 		?>
-		<form method="get" action="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>" class="q2s-demo-filters">
+		<form method="get" action="<?php echo esc_url( get_permalink( wc_get_page_id( 'shop' ) ) ); ?>" class="q2slug-demo-filters">
 			<p>
-				<label for="q2s-df-cat"><strong>Category</strong></label><br>
-				<select name="product_cat" id="q2s-df-cat" style="width:100%">
+				<label for="q2slug-df-cat"><strong>Category</strong></label><br>
+				<select name="product_cat" id="q2slug-df-cat" style="width:100%">
 					<option value="">— Any —</option>
 					<?php foreach ( $cats as $cat ) : ?>
 						<option value="<?php echo esc_attr( $cat->slug ); ?>"
@@ -67,8 +67,8 @@ class Q2S_Demo_Filter_Widget extends WP_Widget {
 				</select>
 			</p>
 			<p>
-				<label for="q2s-df-tag"><strong>Tag</strong></label><br>
-				<select name="product_tag" id="q2s-df-tag" style="width:100%">
+				<label for="q2slug-df-tag"><strong>Tag</strong></label><br>
+				<select name="product_tag" id="q2slug-df-tag" style="width:100%">
 					<option value="">— Any —</option>
 					<?php foreach ( $tags as $tag ) : ?>
 						<option value="<?php echo esc_attr( $tag->slug ); ?>"
@@ -104,5 +104,5 @@ class Q2S_Demo_Filter_Widget extends WP_Widget {
 }
 
 add_action( 'widgets_init', function () {
-	register_widget( 'Q2S_Demo_Filter_Widget' );
+	register_widget( 'Q2SLUG_Demo_Filter_Widget' );
 } );

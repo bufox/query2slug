@@ -1,5 +1,5 @@
 === Query2Slug ===
-Contributors: bufox
+Contributors: simonemorobufox
 Tags: url, slug, landing-page, woocommerce, campaign
 Requires at least: 6.0
 Tested up to: 6.9

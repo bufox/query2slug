@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class Q2S_Rewrite {
+class Q2SLUG_Rewrite {
 
 	public function __construct() {
 		add_action( 'init', array( $this, 'register_rewrite_rule' ) );
@@ -21,41 +21,41 @@ class Q2S_Rewrite {
 
 		add_rewrite_rule(
 			'^' . preg_quote( $prefix, '/' ) . '/([^/]+)/?$',
-			'index.php?q2s_slug=$matches[1]',
+			'index.php?q2slug_slug=$matches[1]',
 			'top'
 		);
 	}
 
 	/**
-	 * Register q2s_slug as a recognized query variable.
+	 * Register q2slug_slug as a recognized query variable.
 	 */
 	public function register_query_var( array $vars ): array {
-		$vars[] = 'q2s_slug';
+		$vars[] = 'q2slug_slug';
 		return $vars;
 	}
 
 	/**
-	 * On parse_request, if q2s_slug is set, look up the rule
+	 * On parse_request, if q2slug_slug is set, look up the rule
 	 * and inject its filters into the query vars.
 	 */
 	public function resolve_slug( \WP $wp ): void {
-		if ( empty( $wp->query_vars['q2s_slug'] ) ) {
+		if ( empty( $wp->query_vars['q2slug_slug'] ) ) {
 			return;
 		}
 
-		$slug = sanitize_title( $wp->query_vars['q2s_slug'] );
-		$rule = Q2S_DB::get_rule_by_slug( $slug );
+		$slug = sanitize_title( $wp->query_vars['q2slug_slug'] );
+		$rule = Q2SLUG_DB::get_rule_by_slug( $slug );
 
 		if ( ! $rule || 1 !== $rule['status'] ) {
 			// Remove our query var and flag as 404.
 			// Safe because the prefix namespace (e.g. /lp/) is exclusively ours.
-			unset( $wp->query_vars['q2s_slug'] );
+			unset( $wp->query_vars['q2slug_slug'] );
 			$wp->query_vars['error'] = '404';
 			return;
 		}
 
 		// Remove our internal query var.
-		unset( $wp->query_vars['q2s_slug'] );
+		unset( $wp->query_vars['q2slug_slug'] );
 
 		// Inject the rule's filters as query vars.
 		foreach ( $rule['filters'] as $key => $value ) {
@@ -67,8 +67,8 @@ class Q2S_Rewrite {
 	 * Flush rewrite rules if flagged by a rule save/delete/toggle.
 	 */
 	public function maybe_flush_rules(): void {
-		if ( get_transient( 'q2s_flush_rewrite' ) ) {
-			delete_transient( 'q2s_flush_rewrite' );
+		if ( get_transient( 'q2slug_flush_rewrite' ) ) {
+			delete_transient( 'q2slug_flush_rewrite' );
 			flush_rewrite_rules();
 		}
 	}
@@ -77,7 +77,7 @@ class Q2S_Rewrite {
 	 * Get the configured URL prefix.
 	 */
 	public static function get_prefix(): string {
-		$prefix = get_option( 'q2s_prefix', 'lp' );
+		$prefix = get_option( 'q2slug_prefix', 'lp' );
 		return sanitize_title( $prefix ) ?: 'lp';
 	}
 }

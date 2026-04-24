@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class Q2S_Redirect {
+class Q2SLUG_Redirect {
 
 	/**
 	 * Query parameter keys that are tracking/UTM params, not content filters.
@@ -65,13 +65,13 @@ class Q2S_Redirect {
 			return;
 		}
 
-		$rule = Q2S_DB::get_rule_by_filters( $filter_params );
+		$rule = Q2SLUG_DB::get_rule_by_filters( $filter_params );
 
 		if ( ! $rule ) {
 			return;
 		}
 
-		$prefix       = Q2S_Rewrite::get_prefix();
+		$prefix       = Q2SLUG_Rewrite::get_prefix();
 		$canonical_url = home_url( '/' . $prefix . '/' . $rule['slug'] . '/' );
 
 		// Re-append tracking params if any.

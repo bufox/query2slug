@@ -12,27 +12,27 @@
 
 /* ---- Rules list table ---- */
 
-.q2s-status-active {
+.q2slug-status-active {
 	color: #00a32a;
 }
 
-.q2s-status-inactive {
+.q2slug-status-inactive {
 	color: #b32d2e;
 }
 
-.q2s-toggle-status {
+.q2slug-toggle-status {
 	cursor: pointer;
 	padding: 0;
 	border: none;
 	background: none;
 }
 
-.q2s-toggle-status:hover .dashicons {
+.q2slug-toggle-status:hover .dashicons {
 	transform: scale(1.2);
 	transition: transform 0.15s ease;
 }
 
-.q2s-toggle-status .dashicons {
+.q2slug-toggle-status .dashicons {
 	font-size: 20px;
 	width: 20px;
 	height: 20px;
@@ -40,7 +40,7 @@
 }
 
 /* Filter badges in list view */
-.q2s-filter-badge {
+.q2slug-filter-badge {
 	display: inline-block;
 	background: #f0f0f1;
 	border: 1px solid #dcdcde;
@@ -54,78 +54,78 @@
 	word-break: break-all;
 }
 
-.q2s-filter-badge .q2s-filter-key {
+.q2slug-filter-badge .q2slug-filter-key {
 	color: #2271b1;
 	font-weight: 600;
 }
 
 /* URL column */
-.q2s-url-cell {
+.q2slug-url-cell {
 	font-family: monospace;
 	font-size: 12px;
 	color: #50575e;
 	word-break: break-all;
 }
 
-.q2s-url-cell a {
+.q2slug-url-cell a {
 	text-decoration: none;
 	color: #50575e;
 }
 
-.q2s-url-cell a:hover {
+.q2slug-url-cell a:hover {
 	color: #2271b1;
 }
 
 /* Row actions */
-.q2s-row-actions {
+.q2slug-row-actions {
 	white-space: nowrap;
 }
 
-.q2s-row-actions .q2s-delete {
+.q2slug-row-actions .q2slug-delete {
 	color: #b32d2e;
 }
 
-.q2s-row-actions .q2s-delete:hover {
+.q2slug-row-actions .q2slug-delete:hover {
 	color: #a00;
 }
 
 /* ---- Edit page: slug field ---- */
 
-#q2s-rule-form #titlediv #titlewrap input {
+#q2slug-rule-form #titlediv #titlewrap input {
 	padding: 6px 10px;
 	font-size: 1.4em;
 	height: auto;
 }
 
-#q2s-slug-status {
+#q2slug-slug-status {
 	font-weight: 500;
 	font-size: 13px;
 }
 
-#q2s-slug-status.q2s-available {
+#q2slug-slug-status.q2slug-available {
 	color: #00a32a;
 }
 
-#q2s-slug-status.q2s-taken {
+#q2slug-slug-status.q2slug-taken {
 	color: #b32d2e;
 }
 
-#q2s-slug-status.q2s-checking {
+#q2slug-slug-status.q2slug-checking {
 	color: #666;
 }
 
-.q2s-slug-sanitized-hidden {
+.q2slug-slug-sanitized-hidden {
 	display: none;
 }
 
-#q2s-slug-sanitized {
+#q2slug-slug-sanitized {
 	color: #996800;
 	font-size: 12px;
 	font-style: italic;
 	margin-left: 8px;
 }
 
-#q2s-url-preview {
+#q2slug-url-preview {
 	font-family: monospace;
 	font-size: 13px;
 	background: #f6f7f7;
@@ -136,56 +136,56 @@
 	margin-top: 6px;
 }
 
-#q2s-url-preview strong {
+#q2slug-url-preview strong {
 	color: #2271b1;
 }
 
 /* ---- Edit page: filter editor ---- */
 
-.q2s-filter-row {
+.q2slug-filter-row {
 	display: flex;
 	align-items: center;
 	gap: 8px;
 	margin-bottom: 8px;
 }
 
-.q2s-filter-row .regular-text {
+.q2slug-filter-row .regular-text {
 	width: 280px;
 }
 
-.q2s-filter-eq {
+.q2slug-filter-eq {
 	font-weight: bold;
 	font-size: 18px;
 	color: #999;
 	flex-shrink: 0;
 }
 
-.q2s-remove-filter {
+.q2slug-remove-filter {
 	flex-shrink: 0;
 	color: #b32d2e !important;
 	border-color: #b32d2e !important;
 }
 
-.q2s-remove-filter:hover {
+.q2slug-remove-filter:hover {
 	background: #b32d2e !important;
 	color: #fff !important;
 }
 
-#q2s-add-filter {
+#q2slug-add-filter {
 	margin-top: 4px;
 }
 
 /* ---- Edit page: sidebar publish box ---- */
 
-#q2s-rule-form .misc-pub-section {
+#q2slug-rule-form .misc-pub-section {
 	padding: 8px 10px;
 }
 
-#q2s-rule-form .misc-pub-section select {
+#q2slug-rule-form .misc-pub-section select {
 	margin-left: 4px;
 }
 
-#q2s-rule-form #major-publishing-actions {
+#q2slug-rule-form #major-publishing-actions {
 	padding: 8px 10px;
 	border-top: 1px solid #dcdcde;
 	background: #f6f7f7;
@@ -194,26 +194,26 @@
 /* ---- Settings page ---- */
 
 /* Prefix collision check */
-.q2s-prefix-status {
+.q2slug-prefix-status {
 	display: block;
 	margin-top: 6px;
 	font-weight: 500;
 	font-size: 13px;
 }
 
-.q2s-prefix-ok {
+.q2slug-prefix-ok {
 	color: #00a32a;
 }
 
-.q2s-prefix-warning {
+.q2slug-prefix-warning {
 	color: #b32d2e;
 }
 
-.q2s-prefix-status.q2s-checking {
+.q2slug-prefix-status.q2slug-checking {
 	color: #666;
 }
 
-#q2s-prefix-example {
+#q2slug-prefix-example {
 	font-family: monospace;
 	font-size: 13px;
 	background: #f6f7f7;
@@ -224,27 +224,27 @@
 	margin-top: 6px;
 }
 
-#q2s-prefix-example strong {
+#q2slug-prefix-example strong {
 	color: #2271b1;
 }
 
-.q2s-overview-list {
+.q2slug-overview-list {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
-.q2s-overview-list li {
+.q2slug-overview-list li {
 	padding: 6px 0;
 	border-bottom: 1px solid #f0f0f1;
 	font-size: 13px;
 }
 
-.q2s-overview-list li:last-child {
+.q2slug-overview-list li:last-child {
 	border-bottom: none;
 }
 
-.q2s-overview-list .dashicons {
+.q2slug-overview-list .dashicons {
 	font-size: 16px;
 	width: 16px;
 	height: 16px;
@@ -254,12 +254,12 @@
 
 /* ---- Empty state ---- */
 
-.q2s-empty-state {
+.q2slug-empty-state {
 	text-align: center;
 	padding: 40px 20px;
 }
 
-.q2s-empty-state .dashicons {
+.q2slug-empty-state .dashicons {
 	font-size: 48px;
 	width: 48px;
 	height: 48px;
@@ -267,7 +267,7 @@
 	margin-bottom: 12px;
 }
 
-.q2s-empty-state p {
+.q2slug-empty-state p {
 	font-size: 14px;
 	color: #646970;
 	margin-bottom: 16px;
@@ -277,20 +277,20 @@
 
 @media screen and (max-width: 782px) {
 	/* Filter editor: stack vertically */
-	.q2s-filter-row {
+	.q2slug-filter-row {
 		flex-wrap: wrap;
 	}
 
-	.q2s-filter-row .regular-text {
+	.q2slug-filter-row .regular-text {
 		width: 100%;
 	}
 
-	.q2s-filter-eq {
+	.q2slug-filter-eq {
 		display: none;
 	}
 
 	/* URL preview */
-	#q2s-url-preview {
+	#q2slug-url-preview {
 		font-size: 11px;
 		word-break: break-all;
 	}

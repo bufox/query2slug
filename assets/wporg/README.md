@@ -9,9 +9,9 @@ These files go in the `/assets/` directory of the SVN repository (not inside the
 - `screenshot-2.png` — Rule editor with slug preview and filter autocomplete
 
 ### How to capture
-1. Go to http://localhost:8888/wp-admin/admin.php?page=q2s-rules (rules list)
+1. Go to http://localhost:8888/wp-admin/admin.php?page=q2slug-rules (rules list)
 2. Screenshot the full page → save as `screenshot-1.png`
-3. Go to http://localhost:8888/wp-admin/admin.php?page=q2s-edit (add/edit rule)
+3. Go to http://localhost:8888/wp-admin/admin.php?page=q2slug-edit (add/edit rule)
 4. Fill in example data and screenshot → save as `screenshot-2.png`
 5. Recommended size: 1280x800 or similar, PNG format
 

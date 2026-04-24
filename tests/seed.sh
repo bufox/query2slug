@@ -103,45 +103,45 @@ echo "  QUERY2SLUG RULES"
 echo "========================================="
 
 $WP eval '
-if (!class_exists("Q2S_DB")) { exit; }
+if (!class_exists("Q2SLUG_DB")) { exit; }
 
 // --- Editorial rules (blog posts, WP categories + tags) ---
 
 // Travel + Italy landing page (e.g. for a "Visit Italy" ad campaign)
-Q2S_DB::save_rule(["slug" => "travel-italy", "filters" => ["category_name" => "travel", "tag" => "italy"], "status" => 1]);
+Q2SLUG_DB::save_rule(["slug" => "travel-italy", "filters" => ["category_name" => "travel", "tag" => "italy"], "status" => 1]);
 
 // Budget travel content hub
-Q2S_DB::save_rule(["slug" => "budget-travel-tips", "filters" => ["category_name" => "travel", "tag" => "budget"], "status" => 1]);
+Q2SLUG_DB::save_rule(["slug" => "budget-travel-tips", "filters" => ["category_name" => "travel", "tag" => "budget"], "status" => 1]);
 
 // Vegan food editorial collection
-Q2S_DB::save_rule(["slug" => "vegan-food-guide", "filters" => ["category_name" => "food-recipes", "tag" => "vegan"], "status" => 1]);
+Q2SLUG_DB::save_rule(["slug" => "vegan-food-guide", "filters" => ["category_name" => "food-recipes", "tag" => "vegan"], "status" => 1]);
 
 // Summer campaign (seasonal content)
-Q2S_DB::save_rule(["slug" => "summer-2026", "filters" => ["tag" => "summer-guide"], "status" => 1]);
+Q2SLUG_DB::save_rule(["slug" => "summer-2026", "filters" => ["tag" => "summer-guide"], "status" => 1]);
 
 // Editor picks (curated content)
-Q2S_DB::save_rule(["slug" => "editor-picks", "filters" => ["tag" => "editor-pick"], "status" => 1]);
+Q2SLUG_DB::save_rule(["slug" => "editor-picks", "filters" => ["tag" => "editor-pick"], "status" => 1]);
 
 // Inactive editorial rule
-Q2S_DB::save_rule(["slug" => "japan-travel", "filters" => ["category_name" => "travel", "tag" => "japan"], "status" => 0]);
+Q2SLUG_DB::save_rule(["slug" => "japan-travel", "filters" => ["category_name" => "travel", "tag" => "japan"], "status" => 0]);
 
 // --- WooCommerce rules (products, product_cat + product_tag) ---
 if (taxonomy_exists("product_cat")) {
 
     // Google Ads: Disney Graphic Tees campaign
-    Q2S_DB::save_rule(["slug" => "disney-graphic-tees", "filters" => ["product_cat" => "graphic-tees", "product_tag" => "disney"], "status" => 1]);
+    Q2SLUG_DB::save_rule(["slug" => "disney-graphic-tees", "filters" => ["product_cat" => "graphic-tees", "product_tag" => "disney"], "status" => 1]);
 
     // Meta Ads: Sale items for Disney fans
-    Q2S_DB::save_rule(["slug" => "disney-sale", "filters" => ["product_tag" => "disney,sale"], "status" => 1]);
+    Q2SLUG_DB::save_rule(["slug" => "disney-sale", "filters" => ["product_tag" => "disney,sale"], "status" => 1]);
 
     // Google Ads: New Marvel arrivals
-    Q2S_DB::save_rule(["slug" => "new-marvel-gear", "filters" => ["product_tag" => "marvel,new-arrival"], "status" => 1]);
+    Q2SLUG_DB::save_rule(["slug" => "new-marvel-gear", "filters" => ["product_tag" => "marvel,new-arrival"], "status" => 1]);
 
     // Kids shop landing page
-    Q2S_DB::save_rule(["slug" => "kids-shop", "filters" => ["product_tag" => "kids"], "status" => 1]);
+    Q2SLUG_DB::save_rule(["slug" => "kids-shop", "filters" => ["product_tag" => "kids"], "status" => 1]);
 
     // Limited edition drops
-    Q2S_DB::save_rule(["slug" => "limited-edition", "filters" => ["product_tag" => "limited-edition"], "status" => 1]);
+    Q2SLUG_DB::save_rule(["slug" => "limited-edition", "filters" => ["product_tag" => "limited-edition"], "status" => 1]);
 
     echo "WooCommerce rules created.\n";
 }

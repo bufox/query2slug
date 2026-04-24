@@ -1,4 +1,4 @@
-/* global jQuery, q2sEdit */
+/* global jQuery, q2slugEdit */
 (function ($) {
 	'use strict';
 
@@ -6,83 +6,83 @@
 
 	// --- Slug field: live preview + collision check ---
 
-	$('#q2s_slug').on('input', function () {
+	$('#q2slug_slug').on('input', function () {
 		var raw = $(this).val();
 		// Mimic sanitize_title: lowercase, keep only a-z, 0-9, hyphens.
 		var slug = raw.toLowerCase().replace(/[^a-z0-9-]/g, '').replace(/-+/g, '-');
 		if (raw !== slug) {
 			$(this).val(slug);
 		}
-		$('#q2s-slug-preview').text(slug || '...');
+		$('#q2slug-slug-preview').text(slug || '...');
 
 		// Show feedback if input was modified by sanitization.
 		if (raw !== slug && slug.length > 0) {
-			$('#q2s-slug-sanitized').text(q2sEdit.strings.sanitized).removeClass('q2s-slug-sanitized-hidden');
+			$('#q2slug-slug-sanitized').text(q2slugEdit.strings.sanitized).removeClass('q2slug-slug-sanitized-hidden');
 		} else {
-			$('#q2s-slug-sanitized').addClass('q2s-slug-sanitized-hidden');
+			$('#q2slug-slug-sanitized').addClass('q2slug-slug-sanitized-hidden');
 		}
 
 		clearTimeout(slugCheckTimer);
 		if (slug.length > 0) {
-			$('#q2s-slug-status')
-				.text(q2sEdit.strings.checking)
-				.attr('class', 'q2s-checking');
+			$('#q2slug-slug-status')
+				.text(q2slugEdit.strings.checking)
+				.attr('class', 'q2slug-checking');
 
 			slugCheckTimer = setTimeout(function () {
 				checkSlugAvailability(slug);
 			}, 400);
 		} else {
-			$('#q2s-slug-status').text('').attr('class', '');
+			$('#q2slug-slug-status').text('').attr('class', '');
 		}
 	});
 
 	function checkSlugAvailability(slug) {
-		$.post(q2sEdit.ajaxUrl, {
-			action: 'q2s_check_slug',
-			_ajax_nonce: q2sEdit.nonce,
+		$.post(q2slugEdit.ajaxUrl, {
+			action: 'q2slug_check_slug',
+			_ajax_nonce: q2slugEdit.nonce,
 			slug: slug,
-			rule_id: $('input[name="q2s_rule_id"]').val()
+			rule_id: $('input[name="q2slug_rule_id"]').val()
 		}, function (response) {
 			if (response.success) {
-				$('#q2s-slug-status')
-					.text(q2sEdit.strings.available)
-					.attr('class', 'q2s-available');
+				$('#q2slug-slug-status')
+					.text(q2slugEdit.strings.available)
+					.attr('class', 'q2slug-available');
 			} else {
-				$('#q2s-slug-status')
-					.text(q2sEdit.strings.taken)
-					.attr('class', 'q2s-taken');
+				$('#q2slug-slug-status')
+					.text(q2slugEdit.strings.taken)
+					.attr('class', 'q2slug-taken');
 			}
 		});
 	}
 
 	// --- Filter rows: add / remove ---
 
-	$('#q2s-add-filter').on('click', function () {
-		var row = '<div class="q2s-filter-row">' +
-			'<input type="text" name="q2s_filter_key[]" placeholder="Parameter (e.g. product_cat)" class="regular-text q2s-filter-key">' +
-			'<span class="q2s-filter-eq">=</span>' +
-			'<input type="text" name="q2s_filter_value[]" placeholder="Value (e.g. t-shirt)" class="regular-text q2s-filter-value">' +
-			'<button type="button" class="button q2s-remove-filter" title="Remove">&minus;</button>' +
+	$('#q2slug-add-filter').on('click', function () {
+		var row = '<div class="q2slug-filter-row">' +
+			'<input type="text" name="q2slug_filter_key[]" placeholder="Parameter (e.g. product_cat)" class="regular-text q2slug-filter-key">' +
+			'<span class="q2slug-filter-eq">=</span>' +
+			'<input type="text" name="q2slug_filter_value[]" placeholder="Value (e.g. t-shirt)" class="regular-text q2slug-filter-value">' +
+			'<button type="button" class="button q2slug-remove-filter" title="Remove">&minus;</button>' +
 			'</div>';
-		$('#q2s-filters-container').append(row);
-		initAutocomplete($('#q2s-filters-container .q2s-filter-row:last'));
+		$('#q2slug-filters-container').append(row);
+		initAutocomplete($('#q2slug-filters-container .q2slug-filter-row:last'));
 	});
 
-	$(document).on('click', '.q2s-remove-filter', function () {
-		var container = $('#q2s-filters-container');
-		if (container.find('.q2s-filter-row').length > 1) {
-			$(this).closest('.q2s-filter-row').remove();
+	$(document).on('click', '.q2slug-remove-filter', function () {
+		var container = $('#q2slug-filters-container');
+		if (container.find('.q2slug-filter-row').length > 1) {
+			$(this).closest('.q2slug-filter-row').remove();
 		}
 	});
 
 	// --- Autocomplete for filter keys (taxonomies) and values (terms) ---
 
 	function initAutocomplete($row) {
-		$row.find('.q2s-filter-key').autocomplete({
+		$row.find('.q2slug-filter-key').autocomplete({
 			source: function (request, response) {
-				$.post(q2sEdit.ajaxUrl, {
-					action: 'q2s_get_taxonomies',
-					_ajax_nonce: q2sEdit.nonce,
+				$.post(q2slugEdit.ajaxUrl, {
+					action: 'q2slug_get_taxonomies',
+					_ajax_nonce: q2slugEdit.nonce,
 					term: request.term
 				}, function (data) {
 					response(data);
@@ -95,16 +95,16 @@
 			}
 		});
 
-		$row.find('.q2s-filter-value').autocomplete({
+		$row.find('.q2slug-filter-value').autocomplete({
 			source: function (request, response) {
-				var taxonomy = $row.find('.q2s-filter-key').val();
+				var taxonomy = $row.find('.q2slug-filter-key').val();
 				if (!taxonomy) {
 					response([]);
 					return;
 				}
-				$.post(q2sEdit.ajaxUrl, {
-					action: 'q2s_get_terms',
-					_ajax_nonce: q2sEdit.nonce,
+				$.post(q2slugEdit.ajaxUrl, {
+					action: 'q2slug_get_terms',
+					_ajax_nonce: q2slugEdit.nonce,
 					taxonomy: taxonomy,
 					term: request.term
 				}, function (data) {
@@ -120,7 +120,7 @@
 	}
 
 	// Init autocomplete on existing rows.
-	$('#q2s-filters-container .q2s-filter-row').each(function () {
+	$('#q2slug-filters-container .q2slug-filter-row').each(function () {
 		initAutocomplete($(this));
 	});
 

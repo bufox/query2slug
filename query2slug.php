@@ -18,37 +18,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'Q2S_VERSION', '1.0.0' );
-define( 'Q2S_PLUGIN_FILE', __FILE__ );
-define( 'Q2S_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
+define( 'Q2SLUG_VERSION', '1.0.0' );
+define( 'Q2SLUG_PLUGIN_FILE', __FILE__ );
+define( 'Q2SLUG_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 
-require_once Q2S_PLUGIN_DIR . 'includes/class-q2s-db.php';
-require_once Q2S_PLUGIN_DIR . 'includes/class-q2s-rewrite.php';
-require_once Q2S_PLUGIN_DIR . 'includes/class-q2s-redirect.php';
-require_once Q2S_PLUGIN_DIR . 'includes/class-q2s-rules-table.php';
-require_once Q2S_PLUGIN_DIR . 'includes/class-q2s-admin.php';
+require_once Q2SLUG_PLUGIN_DIR . 'includes/class-q2slug-db.php';
+require_once Q2SLUG_PLUGIN_DIR . 'includes/class-q2slug-rewrite.php';
+require_once Q2SLUG_PLUGIN_DIR . 'includes/class-q2slug-redirect.php';
+require_once Q2SLUG_PLUGIN_DIR . 'includes/class-q2slug-rules-table.php';
+require_once Q2SLUG_PLUGIN_DIR . 'includes/class-q2slug-admin.php';
 
-register_activation_hook( __FILE__, array( 'Q2S_DB', 'activate' ) );
-register_deactivation_hook( __FILE__, 'q2s_deactivate' );
+register_activation_hook( __FILE__, array( 'Q2SLUG_DB', 'activate' ) );
+register_deactivation_hook( __FILE__, 'q2slug_deactivate' );
 
-add_action( 'plugins_loaded', 'q2s_init' );
+add_action( 'plugins_loaded', 'q2slug_init' );
 
-function q2s_init(): void {
-	new Q2S_Rewrite();
-	new Q2S_Redirect();
+function q2slug_init(): void {
+	new Q2SLUG_Rewrite();
+	new Q2SLUG_Redirect();
 
 	if ( is_admin() ) {
-		new Q2S_Admin();
+		new Q2SLUG_Admin();
 	}
 }
 
-function q2s_deactivate(): void {
+function q2slug_deactivate(): void {
 	// Remove our rewrite rule from wp_rewrite before flushing,
 	// otherwise flush regenerates it from the still-loaded extra_rules_top.
 	global $wp_rewrite;
-	$prefix  = Q2S_Rewrite::get_prefix();
+	$prefix  = Q2SLUG_Rewrite::get_prefix();
 	$pattern = '^' . preg_quote( $prefix, '/' ) . '/([^/]+)/?$';
 	unset( $wp_rewrite->extra_rules_top[ $pattern ] );
 
-	Q2S_DB::deactivate();
+	Q2SLUG_DB::deactivate();
 }

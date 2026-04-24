@@ -8,7 +8,7 @@ if ( ! class_exists( 'WP_List_Table' ) ) {
 	require_once ABSPATH . 'wp-admin/includes/class-wp-list-table.php';
 }
 
-class Q2S_Rules_Table extends WP_List_Table {
+class Q2SLUG_Rules_Table extends WP_List_Table {
 
 	public function __construct() {
 		parent::__construct( array(
@@ -31,7 +31,7 @@ class Q2S_Rules_Table extends WP_List_Table {
 
 		$this->process_bulk_action();
 
-		$this->items = Q2S_DB::get_rules();
+		$this->items = Q2SLUG_DB::get_rules();
 	}
 
 	/**
@@ -58,7 +58,7 @@ class Q2S_Rules_Table extends WP_List_Table {
 	 */
 	public function column_cb( $item ): string {
 		return sprintf(
-			'<input type="checkbox" name="q2s_rule_ids[]" value="%d" />',
+			'<input type="checkbox" name="q2slug_rule_ids[]" value="%d" />',
 			$item['id']
 		);
 	}
@@ -67,10 +67,10 @@ class Q2S_Rules_Table extends WP_List_Table {
 	 * Slug column with status toggle and row actions.
 	 */
 	public function column_slug( array $item ): string {
-		$edit_url   = admin_url( 'admin.php?page=q2s-edit&rule_id=' . $item['id'] );
+		$edit_url   = admin_url( 'admin.php?page=q2slug-edit&rule_id=' . $item['id'] );
 		$delete_url = wp_nonce_url(
-			admin_url( 'admin.php?page=q2s-rules&q2s_action=delete&rule_id=' . $item['id'] ),
-			'q2s_delete_' . $item['id']
+			admin_url( 'admin.php?page=q2slug-rules&q2slug_action=delete&rule_id=' . $item['id'] ),
+			'q2slug_delete_' . $item['id']
 		);
 
 		$actions = array(
@@ -80,19 +80,19 @@ class Q2S_Rules_Table extends WP_List_Table {
 				esc_html__( 'Edit', 'query2slug' )
 			),
 			'delete' => sprintf(
-				'<a href="%s" class="q2s-delete">%s</a>',
+				'<a href="%s" class="q2slug-delete">%s</a>',
 				esc_url( $delete_url ),
 				esc_html__( 'Delete', 'query2slug' )
 			),
 		);
 
-		$icon_class = $item['status'] ? 'dashicons-yes-alt q2s-status-active' : 'dashicons-marker q2s-status-inactive';
+		$icon_class = $item['status'] ? 'dashicons-yes-alt q2slug-status-active' : 'dashicons-marker q2slug-status-inactive';
 		$icon_title = $item['status']
 			? esc_attr__( 'Active — click to deactivate', 'query2slug' )
 			: esc_attr__( 'Inactive — click to activate', 'query2slug' );
 
 		return sprintf(
-			'<button type="button" class="q2s-toggle-status button-link" data-rule-id="%d" title="%s"><span class="dashicons %s"></span></button> <strong>%s</strong>%s',
+			'<button type="button" class="q2slug-toggle-status button-link" data-rule-id="%d" title="%s"><span class="dashicons %s"></span></button> <strong>%s</strong>%s',
 			$item['id'],
 			$icon_title,
 			$icon_class,
@@ -105,11 +105,11 @@ class Q2S_Rules_Table extends WP_List_Table {
 	 * URL column.
 	 */
 	public function column_url( array $item ): string {
-		$prefix = Q2S_Rewrite::get_prefix();
+		$prefix = Q2SLUG_Rewrite::get_prefix();
 		$url    = home_url( '/' . $prefix . '/' . $item['slug'] . '/' );
 
 		return sprintf(
-			'<a href="%s" target="_blank" class="q2s-url-cell">%s</a>',
+			'<a href="%s" target="_blank" class="q2slug-url-cell">%s</a>',
 			esc_url( $url ),
 			esc_html( $url )
 		);
@@ -122,7 +122,7 @@ class Q2S_Rules_Table extends WP_List_Table {
 		$badges = '';
 		foreach ( $item['filters'] as $key => $value ) {
 			$badges .= sprintf(
-				'<span class="q2s-filter-badge"><span class="q2s-filter-key">%s</span>=%s</span> ',
+				'<span class="q2slug-filter-badge"><span class="q2slug-filter-key">%s</span>=%s</span> ',
 				esc_html( $key ),
 				esc_html( $value )
 			);
@@ -157,8 +157,8 @@ class Q2S_Rules_Table extends WP_List_Table {
 			wp_die( esc_html__( 'Unauthorized.', 'query2slug' ) );
 		}
 
-		$ids = isset( $_POST['q2s_rule_ids'] ) && is_array( $_POST['q2s_rule_ids'] )
-			? array_map( 'absint', $_POST['q2s_rule_ids'] )
+		$ids = isset( $_POST['q2slug_rule_ids'] ) && is_array( $_POST['q2slug_rule_ids'] )
+			? array_map( 'absint', $_POST['q2slug_rule_ids'] )
 			: array();
 
 		if ( empty( $ids ) ) {
@@ -168,18 +168,18 @@ class Q2S_Rules_Table extends WP_List_Table {
 		foreach ( $ids as $rule_id ) {
 			switch ( $action ) {
 				case 'activate':
-					Q2S_DB::set_status( $rule_id, 1 );
+					Q2SLUG_DB::set_status( $rule_id, 1 );
 					break;
 				case 'deactivate':
-					Q2S_DB::set_status( $rule_id, 0 );
+					Q2SLUG_DB::set_status( $rule_id, 0 );
 					break;
 				case 'delete':
-					Q2S_DB::delete_rule( $rule_id );
+					Q2SLUG_DB::delete_rule( $rule_id );
 					break;
 			}
 		}
 
-		wp_safe_redirect( admin_url( 'admin.php?page=q2s-rules&message=bulk_done' ) );
+		wp_safe_redirect( admin_url( 'admin.php?page=q2slug-rules&message=bulk_done' ) );
 		exit;
 	}
 
@@ -188,10 +188,10 @@ class Q2S_Rules_Table extends WP_List_Table {
 	 */
 	public function no_items(): void {
 		?>
-		<div class="q2s-empty-state">
+		<div class="q2slug-empty-state">
 			<span class="dashicons dashicons-admin-links"></span>
 			<p><?php esc_html_e( 'No rules yet. Create your first rule to get started.', 'query2slug' ); ?></p>
-			<a href="<?php echo esc_url( admin_url( 'admin.php?page=q2s-edit' ) ); ?>" class="button button-primary">
+			<a href="<?php echo esc_url( admin_url( 'admin.php?page=q2slug-edit' ) ); ?>" class="button button-primary">
 				<?php esc_html_e( 'Add New Rule', 'query2slug' ); ?>
 			</a>
 		</div>

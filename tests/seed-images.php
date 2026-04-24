@@ -14,7 +14,7 @@ require_once ABSPATH . 'wp-admin/includes/media.php';
 require_once ABSPATH . 'wp-admin/includes/file.php';
 require_once ABSPATH . 'wp-admin/includes/image.php';
 
-echo "=== Q2S Demo Images ===\n\n";
+echo "=== Q2SLUG Demo Images ===\n\n";
 
 // ─── Curated Picsum IDs ───
 // Blog posts: landscape 1200x800.
@@ -73,7 +73,7 @@ $product_images = array(
 /**
  * Download and attach a featured image from picsum.photos.
  */
-function q2s_seed_set_image( int $post_id, int $picsum_id, string $size = '1200/800' ): bool {
+function q2slug_seed_set_image( int $post_id, int $picsum_id, string $size = '1200/800' ): bool {
 	// Skip if already has a thumbnail.
 	if ( has_post_thumbnail( $post_id ) ) {
 		return false;
@@ -106,7 +106,7 @@ foreach ( $blog_images as $title => $picsum_id ) {
 		echo "  Skipped (has image): $title\n";
 		continue;
 	}
-	$result = q2s_seed_set_image( $post->ID, $picsum_id, '1200/800' );
+	$result = q2slug_seed_set_image( $post->ID, $picsum_id, '1200/800' );
 	if ( $result ) {
 		echo "  Set image: $title (picsum #{$picsum_id})\n";
 	}
@@ -124,7 +124,7 @@ foreach ( $product_images as $title => $picsum_id ) {
 		echo "  Skipped (has image): $title\n";
 		continue;
 	}
-	$result = q2s_seed_set_image( $post->ID, $picsum_id, '800/800' );
+	$result = q2slug_seed_set_image( $post->ID, $picsum_id, '800/800' );
 	if ( $result ) {
 		echo "  Set image: $title (picsum #{$picsum_id})\n";
 	}

@@ -4,10 +4,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class Q2S_DB {
+class Q2SLUG_DB {
 
-	const TABLE_NAME   = 'q2s_rules';
-	const CACHE_GROUP  = 'q2s';
+	const TABLE_NAME   = 'q2slug_rules';
+	const CACHE_GROUP  = 'q2slug';
 
 	/**
 	 * Get the full table name with prefix.
@@ -23,11 +23,11 @@ class Q2S_DB {
 	public static function activate(): void {
 		self::create_table();
 
-		if ( false === get_option( 'q2s_prefix' ) ) {
-			add_option( 'q2s_prefix', 'lp' );
+		if ( false === get_option( 'q2slug_prefix' ) ) {
+			add_option( 'q2slug_prefix', 'lp' );
 		}
 
-		set_transient( 'q2s_flush_rewrite', true );
+		set_transient( 'q2slug_flush_rewrite', true );
 	}
 
 	/**
@@ -216,17 +216,17 @@ class Q2S_DB {
 		$slug  = isset( $data['slug'] ) ? sanitize_title( $data['slug'] ) : '';
 
 		if ( empty( $slug ) ) {
-			return new \WP_Error( 'q2s_empty_slug', __( 'Slug cannot be empty.', 'query2slug' ) );
+			return new \WP_Error( 'q2slug_empty_slug', __( 'Slug cannot be empty.', 'query2slug' ) );
 		}
 
 		if ( ! preg_match( '/^[a-z0-9]([a-z0-9-]*[a-z0-9])?$/', $slug ) ) {
-			return new \WP_Error( 'q2s_invalid_slug', __( 'Slug must contain only lowercase letters, numbers, and hyphens.', 'query2slug' ) );
+			return new \WP_Error( 'q2slug_invalid_slug', __( 'Slug must contain only lowercase letters, numbers, and hyphens.', 'query2slug' ) );
 		}
 
 		$filters = isset( $data['filters'] ) && is_array( $data['filters'] ) ? $data['filters'] : array();
 
 		if ( empty( $filters ) ) {
-			return new \WP_Error( 'q2s_empty_filters', __( 'At least one filter is required.', 'query2slug' ) );
+			return new \WP_Error( 'q2slug_empty_filters', __( 'At least one filter is required.', 'query2slug' ) );
 		}
 
 		// Sanitize filter keys and values.
@@ -240,7 +240,7 @@ class Q2S_DB {
 		}
 
 		if ( empty( $clean_filters ) ) {
-			return new \WP_Error( 'q2s_empty_filters', __( 'At least one valid filter is required.', 'query2slug' ) );
+			return new \WP_Error( 'q2slug_empty_filters', __( 'At least one valid filter is required.', 'query2slug' ) );
 		}
 
 		$filter_hash = self::compute_filter_hash( $clean_filters );
@@ -249,14 +249,14 @@ class Q2S_DB {
 		// Check slug uniqueness (excluding current rule if updating).
 		$existing = self::get_rule_by_slug( $slug );
 		if ( $existing && $existing['id'] !== $id ) {
-			return new \WP_Error( 'q2s_duplicate_slug', __( 'This slug is already in use.', 'query2slug' ) );
+			return new \WP_Error( 'q2slug_duplicate_slug', __( 'This slug is already in use.', 'query2slug' ) );
 		}
 
 		// Check filter hash uniqueness.
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Write path, no cache needed.
 		$hash_exists = $wpdb->get_var( $wpdb->prepare( "SELECT id FROM {$table} WHERE filter_hash = %s AND id != %d", $filter_hash, $id ) );
 		if ( $hash_exists ) {
-			return new \WP_Error( 'q2s_duplicate_filters', __( 'A rule with the same filters already exists.', 'query2slug' ) );
+			return new \WP_Error( 'q2slug_duplicate_filters', __( 'A rule with the same filters already exists.', 'query2slug' ) );
 		}
 
 		$db_data = array(
@@ -278,7 +278,7 @@ class Q2S_DB {
 		}
 
 		self::invalidate_cache();
-		set_transient( 'q2s_flush_rewrite', true );
+		set_transient( 'q2slug_flush_rewrite', true );
 
 		return $id;
 	}
@@ -295,7 +295,7 @@ class Q2S_DB {
 
 		if ( $result ) {
 			self::invalidate_cache();
-			set_transient( 'q2s_flush_rewrite', true );
+			set_transient( 'q2slug_flush_rewrite', true );
 		}
 
 		return (bool) $result;
@@ -313,7 +313,7 @@ class Q2S_DB {
 
 		if ( false !== $result ) {
 			self::invalidate_cache();
-			set_transient( 'q2s_flush_rewrite', true );
+			set_transient( 'q2slug_flush_rewrite', true );
 		}
 
 		return false !== $result;
@@ -331,7 +331,7 @@ class Q2S_DB {
 
 		if ( $result ) {
 			self::invalidate_cache();
-			set_transient( 'q2s_flush_rewrite', true );
+			set_transient( 'q2slug_flush_rewrite', true );
 		}
 
 		return (bool) $result;

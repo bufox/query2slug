@@ -1,6 +1,6 @@
 <?php
 /**
- * Demo seed script for Q2S screenshots/GIFs.
+ * Demo seed script for Q2SLUG screenshots/GIFs.
  * Run with: npx @wordpress/env run cli wp eval-file /var/www/html/wp-content/plugins/query2slug/tests/seed-demo.php
  */
 
@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-echo "=== Q2S Demo Seed ===\n\n";
+echo "=== Q2SLUG Demo Seed ===\n\n";
 
 // ─── 1. Clean up duplicates ───
 echo "--- Cleaning duplicates ---\n";
@@ -466,10 +466,10 @@ if ( $uncat_term ) {
 	}
 }
 
-// ─── 9. Clean existing Q2S rules and recreate ───
-echo "\n--- Setting up Q2S rules ---\n";
+// ─── 9. Clean existing Q2SLUG rules and recreate ───
+echo "\n--- Setting up Q2SLUG rules ---\n";
 global $wpdb;
-$table = $wpdb->prefix . 'q2s_rules';
+$table = $wpdb->prefix . 'q2slug_rules';
 $wpdb->query( "TRUNCATE TABLE {$table}" );
 echo "  Cleared existing rules.\n";
 
@@ -572,7 +572,7 @@ update_option( 'blogdescription', 'Pop Culture Apparel & Accessories' );
 echo "  Site title: GeekStyle Shop\n";
 
 // Flush rewrite rules.
-set_transient( 'q2s_flush_rewrite', true );
+set_transient( 'q2slug_flush_rewrite', true );
 flush_rewrite_rules();
 echo "  Flushed rewrite rules.\n";
 

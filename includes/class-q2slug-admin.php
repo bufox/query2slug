@@ -4,7 +4,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-class Q2S_Admin {
+class Q2SLUG_Admin {
 
 	/** @var string Main menu page hook suffix. */
 	private string $hook_list = '';
@@ -22,11 +22,11 @@ class Q2S_Admin {
 		add_action( 'admin_init', array( $this, 'register_settings' ) );
 
 		// AJAX endpoints.
-		add_action( 'wp_ajax_q2s_check_slug', array( $this, 'ajax_check_slug' ) );
-		add_action( 'wp_ajax_q2s_toggle_status', array( $this, 'ajax_toggle_status' ) );
-		add_action( 'wp_ajax_q2s_get_taxonomies', array( $this, 'ajax_get_taxonomies' ) );
-		add_action( 'wp_ajax_q2s_get_terms', array( $this, 'ajax_get_terms' ) );
-		add_action( 'wp_ajax_q2s_check_prefix', array( $this, 'ajax_check_prefix' ) );
+		add_action( 'wp_ajax_q2slug_check_slug', array( $this, 'ajax_check_slug' ) );
+		add_action( 'wp_ajax_q2slug_toggle_status', array( $this, 'ajax_toggle_status' ) );
+		add_action( 'wp_ajax_q2slug_get_taxonomies', array( $this, 'ajax_get_taxonomies' ) );
+		add_action( 'wp_ajax_q2slug_get_terms', array( $this, 'ajax_get_terms' ) );
+		add_action( 'wp_ajax_q2slug_check_prefix', array( $this, 'ajax_check_prefix' ) );
 	}
 
 	/**
@@ -37,7 +37,7 @@ class Q2S_Admin {
 			__( 'Query2Slug', 'query2slug' ),
 			__( 'Query2Slug', 'query2slug' ),
 			'manage_options',
-			'q2s-rules',
+			'q2slug-rules',
 			array( $this, 'render_list_page' ),
 			'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0yMzEgLTM4OCA3MDQgMzMyIiBmaWxsPSJibGFjayIgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIj4KICA8cGF0aCBkPSJtIDMxLjQ0OTc2NCwtMTQyLjQ5ODYgYyAwLC02LjIxMzM1IDguMzE4NjUsLTIzLjU2NzU3IDE3LjY1MzQ1LC0zNi44MjgzIDEyLjc0NDMyLC0xOC4xMDQyMSAyNy43NjAyODEsLTMyLjE2NzU2IDYwLjM0NjU1NiwtNTYuNTE4MjEgMTIuOTI1LC05LjY1ODQzIDI1Ljk3MTU0LC0xOS40MDg0MyAyOC45OTIzLC0yMS42NjY2NiAyOC42Mjg5OCwtMjEuNDAyMjIgNDEuMzk4NzgsLTMzLjY2NzUxIDQ3LjI2OTA4LC00NS40MDE1NCA0LjQwMzk4LC04LjgwMzAzIDUuNDA5NzgsLTE0LjYyNzQ2IDMuNzgyMDEsLTIxLjkwMTA3IC0yLjQ2ODQ1LC0xMS4wMzAxOSAtMTIuMjc3NDgsLTE3LjMxNzk3IC0yNi45NzQ4OSwtMTcuMjkxNDEgLTIxLjc0MDExLC0wLjA1NTggLTMzLjAxMjMsMTIuNjQ3ODIgLTQxLjYzMjQ2LDMwLjQ4ODEzIC0yMC40MjUxMiwwLjA2NDIgLTUyLjI0MTE0MywtMC4wMTcgLTUyLjI0MTE0MywtMC4wMTcgMjIuODE0OTIzLC00OC4wMzgyOCA1OC4xNzYyMTMsLTc3LjQ0NjUyIDExMi4yNDI4NTMsLTczLjUzNTg2IDIxLjI2OTQ5LDIuMjkwMDEgMzcuNDExNzksOC45MTE1OSA0OC40Mjg2NSwxOS44NjU0NSAxMy4zMjY5MywxMy4yNTA3IDE4Ljg3MjkzLDMwLjQxMzQ4IDE2LjE2NTI5LDUwLjAyNTQ3IC00LjA4NTg2LDI5LjU5NDc2IC0yMC43NDc5MSw1MC43OTU3NSAtNjQuMTI5MDYsODEuNTk4NTkgLTM0LjYwMjI5LDI0LjU2OTM5IC00My42NDg5NCwzMS40MTE5NiAtNTEuMDk2MzcsMzguNjQ3NDkgLTQuMjkzNDQsNC4xNzEyNyAtNy44MDYyNiw4LjEwODc3IC03LjgwNjI2LDguNzUgMCwwLjg3MjI3IDEyLjU4NDg5LDEuMTY1ODYgNDkuOTc0MzIsMS4xNjU4NiBoIDQ5Ljk3NDMyIGwgNy44ODA3MiwwLjAwNiBjIC0yLjU1NzYxLDQuNTM5NjEgLTYuMTQ5MDMsNy44MDM5NSAtOS45NTIzMywxMS4yMzA5MSAtMTQuOTMxMzIsMTMuNDUzODQgLTI5LjU4NDA1LDIyLjA2ODQ5IC00Ni45MjE2NCwyNy41ODYyMiAtMTguNjY0NDMsNS45NCAtMjEuODIxOTksNi4xNzAxNCAtODQuNzA1Mzk1LDYuMTczNjUgbCAtNTcuMjUwMDAxLDAuMDAzIHoiLz4KICA8cGF0aCBkPSJtIDM2NS43OTc4NywtMTg0LjYwODQ4IGMgMCwwIDMxLjU5OTk4LC04LjgyMTM0IDMyLjg1NzksLTI2Ljg0NjgyIC0wLjEwMjQ5LC0xMi44MjgxMSAtOS4yNDUwOCwtMTguOTgyMTEgLTQyLjcwNiwtMjguNzQ2IC0yOC4xNTU0NSwtOC4yMTU3NSAtNDAuOTA2MjYsLTEzLjEyMTU5IC01MiwtMjAuMDA2ODUgLTIwLjQ5NjU2LC0xMi43MjEwNyAtMjkuMDIxLC0zMi45NTY4MyAtMjQuMDAzMTMsLTU2Ljk3OTg3IDYuNjQ0NDIsLTMxLjgxMDE3IDMyLjgzNjE2LC01Ni43MDMxOSA2OS44NjUzLC02Ni40MDEwMiA0NC40NjEyMSwtMTEuNjQ0MjYgODYuNjQwNTcsLTAuNDQ1ODYgMTIyLjc1NDk5LDE5LjEwNDk5IC0wLjAwNSwwLjA2OTcgLTIyLjQyMDYsNDMuNjM2NjQgLTIyLjQyMDYsNDMuNjM2NjQgLTkuNjU2NzMsLTYuNTg2OTQgLTM0LjExNzc5LC0xNi41MDg4NCAtNDguNzQzMjgsLTE5LjI4OTk5IC0xMi42MDUxOCwtMi4zOTY5NyAtMzAuNjU4ODgsLTIuMDM3MTMgLTM4LjQ5MzE4LC0wLjAwMyAtMTcuMDMwNzksNC40MjA4NyAtMjYuNDYwMSwxMi44MTEzNSAtMjYuNDYwMSwyMy41NDUgMCw1LjQwOTc2IDIuODYyNjQsOS45NjYwNCA4LjY4NDIsMTMuODIyMDggNS41ODkwNiwzLjcwMjA0IDExLjY2MjQsNi4wMjUwOSAyOS4zMTU4LDExLjIxMzI5IDQ2LjE3OTM4LDEzLjU3MTc2IDY0LjE5ODY2LDIyLjkzNTIzIDc0Ljg1OTE5LDM4Ljg5OTQ5IDYuNTcxODcsOS44NDE0NSA4LjQ3NDc4LDE3LjYxNjQ0IDcuOTAzNDMsMzIuMjkyMiAtMC4zOTI3OSwxMC4wODk0MiAtMC45Nzk0LDEzLjY0MDIzIC0zLjQxNjYsMjAuNjgwODEgLTcuNTQwNjksMjEuNzgzNTcgLTIzLjk1MDY4LDM5LjkxMDgyIC00Ni4yMjAyOCw1MS4wNTcxMSAtMTkuODc3NzcsMTAuMjI5NjkgLTQyLjMxMzkzLDEwLjc3OTUxIC02NC4xNTAzNywxMS4wNjg2NyB6Ii8+CiAgPHBhdGggZD0ibSAtNzIuODUzMzg0LC0xMDkuMzY3NjYgYyAtMC4yODYsLTEuMjM3NSAtMS4zMTIyLC03Ljc0ODcgLTIuMjgwNCwtMTQuNDY5MzMgLTAuOTY4MywtNi43MjA2MyAtMi4wNjY5LC0xMi43MTUwMSAtMi40NDEzLC0xMy4zMjA4NiAtMC40ODc1LC0wLjc4ODggLTIuNzk0OSwtMC42NjQ4NiAtOC4xMjczLDAuNDM2NTggLTI1LjY5MTI5Niw1LjMwNjcgLTU2LjY3MzQ5NiwzLjk0Mzk1IC03OC45OTgyOTYsLTMuNDc0NzMgLTMzLjc5NDQsLTExLjIzMDA5IC01NS45NzA3LC0zNC42MDM2OCAtNjQuNDQyNSwtNjcuOTIxNjYgLTIuOTAwMywtMTEuNDA2MTggLTIuNjcwNSwtNDAuOTAwODcgMC40MTk3LC01My44NzMyOCAxMy42OTQzLC01Ny40ODcgNTguNzg3OSwtMTAzLjIwNjc1IDExNi41MjE1LC0xMTguMTM5MyA0MC4xNjgyOTYsLTEwLjM4OTM2IDc4LjY2ODE5NCwtNi4zNjM4MyAxMDguMTUxNzQ0MywxMS4zMDgzIDkuMDQ5MTcsNS40MjM5OCAyMi4zMTk0Njk3LDE4LjE1NTU1IDI4LjQwMDY1OTcsMjcuMjQ3NjggNS40MzkwNSw4LjEzMjA2IDEwLjI0NDI2LDE5LjA1MTgzIDEzLjMyNTEzLDMwLjI4MTE3IDEuNzg5MSw2LjUyMTAyIDIuMTExNTYsMTAuNTMzMSAyLjE0Mzk4LDI2LjY3NTQzIDAuMDQxNywyMC43NjA3MiAtMS4wOTI1NCwyNy44ODE3MSAtNy40ODQyNSw0Ni45ODc4NSAtMi45MzAyOCw4Ljc1OTIgLTEzLjUyMzI2LDMwLjUxMjE1IC0xNC44NTg0NCwzMC41MTIxNSAtMC41OTI2OSwwIC0yMC44Mzk2Nzk3LC04LjkyNTUgLTQwLjU1NTcsLTE3Ljg3ODIyIGwgLTcuMDI4NjMsLTMuMTkxNTggNC43NjkyLC05LjcxNTEgYyA2LjkwNzQzLC0xNC4wNzA4MiA5LjgzMzA1LC0yNS4xNTM2NSAxMC40ODM4OSwtMzkuNzE1MSAwLjY2MDk3LC0xNC43ODgyMiAtMC41MTI3NSwtMjEuNTMyMTQgLTUuNTY5MzEsLTMyIC0xMS40MzE4OCwtMjMuNjY1NyAtNDAuMDE4MTgsLTM1LjA1MTg0IC03Mi40NzUyNzgsLTI4Ljg2NzQxIC00NS45MDI2OTYsOC43NDYzNiAtODAuOTg4NDk2LDQ5LjEwMTY4IC04My4zNDkyOTYsOTUuODY3NDEgLTEuNjE0NSwzMS45ODE1NyAxMy4zMzE4LDUzLjYxNTEyIDQyLjE5ODEsNjEuMDc4MjUgMTQuODAwMiwzLjgyNjQ4IDUwLjIzMjQ5NiwwLjkyNzQ3IDQ5Ljg0NTE5NiwtNC4wNzgyNSAtMC4wODUsLTEuMSAtMS42MTI3LC0xMi42OTczOCAtMy4zOTQ3LC0yNS43NzE5NiAtMS43ODIsLTEzLjA3NDU3IC0zLjAxNTcsLTIzLjk5NjE4IC0yLjc0MTcsLTI0LjI3MDI0IDAuMjc0MSwtMC4yNzQwNiAzLjgyNjcsMS4wNDA1NCA3Ljg5NDcsMi45MjEzMyA5LjczMTUsNC40OTkxOCAzOC4wNDMxOTgsMTcuMzU1ODkgNDkuMzk2NDk4LDIyLjQzMTU4IDQuOTQ5OTUsMi4yMTI5OCAxOS4xMjQ5NSw4LjYxMTggMzEuNDk5OTUwMywxNC4yMTk1OSAxMi4zNzQ5OTk3LDUuNjA3NzkgMjMuMzAzOTk5NywxMC40OTg2IDI0LjI4NjY2OTcsMTAuODY4NDggMS40MzU1MSwwLjU0MDMyIDAuMDU5NywyLjA2NDg5IC03LDcuNzU2OTMgLTE4LjIzMTUzOTcsMTQuNjk5NTcgLTU4LjU5MzkyLDQ3LjI4NTE3IC03Mi41NzgxMiw1OC41OTQyOSAtNy45OTEyLDYuNDYyNSAtMTQuNzQ1OTk4LDExLjc1IC0xNS4wMTA1OTgsMTEuNzUgLTAuMjY0NiwwIC0wLjcxNTEsLTEuMDEyNSAtMS4wMDExLC0yLjI1IHoiLz4KICA8cGF0aCBkPSJtIC0yLjc3NTMzMjgsLTE0OC40ODUzNSBjIDY0LjUwMjEwNjgsNjUuOTU5NzM5IDE0OS4zMjM1MDI4LDQ0LjQzNTQ4IDIwMy4wMjMyNzI4LDE5LjY1ODgzIDEzLjU2MDkyLC02LjI1NjkyIDM5LjUyNTQ5LC0yMS4xMTQ2NyA1MC44OTMsLTI5Ljc1Mzk5IC00LjAzMjkyLC02LjQ4MDY3IC01LjQ2NTY5LC04LjcwMDg0IC0xMC40NjA0OCwtMTYuMTc1MTEgLTMuMzc4MTcsLTUuMDU1MTIgLTYuOTUzNDYsLTEwLjIwMjc2IC02LjQ3NTc4LC0xMC4yMDE5NyAxMC4xMzc3OSwwLjAxNjcgMTAuMTE4MDIsMC4wMTk4IDQ2LjAwNTE2LDAuMTg2MTkgMTYuNTM1NjcsMC4wNzY3IDMzLjIyMzczLDAuMTI0ODMgMzcuMDg0NTcsMC4xMDcwNSAxMy41MjM0NCwtMC4wNjIzIDM4LjM4MjUxLC0wLjE1NzE1IDM4LjM4MjUxLC0wLjE1NzE1IDAsMCAtNS4zOTIwNCwxMS4xNTY4NiAtMTIuMDYwNTUsMjMuNjIyNzUgLTYuNjY4NTEsMTIuNDY1ODkgLTE4LjM3NTYzLDM0LjQxNTU0IC0yNi4wMTU4Miw0OC43NzcgbCAtMTMuODkxMjcsMjYuMTExNzIyIC0xMC4wMjE3NiwtMTEuNjc0NyAtMTAuMDIxNzUsLTExLjY3NDY4MiBjIC0xMDcuNTk0ODksNjIuMzY5ODYgLTIxNS45OTQ3NzQsNzYuNzQxMDMgLTMxNC4yOTY5NDgsNS4xODcwNSBsIC0xMy4zNTIzOCwtMTAuNDc5NTIiLz4KPC9zdmc+Cg==',
 			30
@@ -45,29 +45,29 @@ class Q2S_Admin {
 
 		// Override the auto-generated first submenu item label.
 		add_submenu_page(
-			'q2s-rules',
+			'q2slug-rules',
 			__( 'All Rules', 'query2slug' ),
 			__( 'All Rules', 'query2slug' ),
 			'manage_options',
-			'q2s-rules',
+			'q2slug-rules',
 			array( $this, 'render_list_page' )
 		);
 
 		$this->hook_edit = add_submenu_page(
-			'q2s-rules',
+			'q2slug-rules',
 			__( 'Add Rule', 'query2slug' ),
 			__( 'Add Rule', 'query2slug' ),
 			'manage_options',
-			'q2s-edit',
+			'q2slug-edit',
 			array( $this, 'render_edit_page' )
 		);
 
 		$this->hook_settings = add_submenu_page(
-			'q2s-rules',
+			'q2slug-rules',
 			__( 'Settings', 'query2slug' ),
 			__( 'Settings', 'query2slug' ),
 			'manage_options',
-			'q2s-settings',
+			'q2slug-settings',
 			array( $this, 'render_settings_page' )
 		);
 	}
@@ -83,25 +83,25 @@ class Q2S_Admin {
 		}
 
 		wp_enqueue_style(
-			'q2s-admin',
-			plugins_url( 'assets/admin.css', Q2S_PLUGIN_FILE ),
+			'q2slug-admin',
+			plugins_url( 'assets/admin.css', Q2SLUG_PLUGIN_FILE ),
 			array(),
-			Q2S_VERSION
+			Q2SLUG_VERSION
 		);
 
 		if ( $hook === $this->hook_edit ) {
 			wp_enqueue_script(
-				'q2s-edit',
-				plugins_url( 'assets/edit.js', Q2S_PLUGIN_FILE ),
+				'q2slug-edit',
+				plugins_url( 'assets/edit.js', Q2SLUG_PLUGIN_FILE ),
 				array( 'jquery', 'jquery-ui-autocomplete' ),
-				Q2S_VERSION,
+				Q2SLUG_VERSION,
 				true
 			);
 
-			wp_localize_script( 'q2s-edit', 'q2sEdit', array(
+			wp_localize_script( 'q2slug-edit', 'q2slugEdit', array(
 				'ajaxUrl'  => admin_url( 'admin-ajax.php' ),
-				'nonce'    => wp_create_nonce( 'q2s_admin' ),
-				'prefix'   => Q2S_Rewrite::get_prefix(),
+				'nonce'    => wp_create_nonce( 'q2slug_admin' ),
+				'prefix'   => Q2SLUG_Rewrite::get_prefix(),
 				'homeUrl'  => home_url( '/' ),
 				'strings'  => array(
 					'available' => __( 'Available', 'query2slug' ),
@@ -114,16 +114,16 @@ class Q2S_Admin {
 
 		if ( $hook === $this->hook_list ) {
 			wp_enqueue_script(
-				'q2s-list',
-				plugins_url( 'assets/list.js', Q2S_PLUGIN_FILE ),
+				'q2slug-list',
+				plugins_url( 'assets/list.js', Q2SLUG_PLUGIN_FILE ),
 				array( 'jquery' ),
-				Q2S_VERSION,
+				Q2SLUG_VERSION,
 				true
 			);
 
-			wp_localize_script( 'q2s-list', 'q2sList', array(
+			wp_localize_script( 'q2slug-list', 'q2slugList', array(
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( 'q2s_admin' ),
+				'nonce'   => wp_create_nonce( 'q2slug_admin' ),
 				'strings' => array(
 					'confirmDelete' => __( 'Delete this rule?', 'query2slug' ),
 				),
@@ -132,16 +132,16 @@ class Q2S_Admin {
 
 		if ( $hook === $this->hook_settings ) {
 			wp_enqueue_script(
-				'q2s-settings',
-				plugins_url( 'assets/settings.js', Q2S_PLUGIN_FILE ),
+				'q2slug-settings',
+				plugins_url( 'assets/settings.js', Q2SLUG_PLUGIN_FILE ),
 				array( 'jquery' ),
-				Q2S_VERSION,
+				Q2SLUG_VERSION,
 				true
 			);
 
-			wp_localize_script( 'q2s-settings', 'q2sSettings', array(
+			wp_localize_script( 'q2slug-settings', 'q2slugSettings', array(
 				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( 'q2s_admin' ),
+				'nonce'   => wp_create_nonce( 'q2slug_admin' ),
 				'homeUrl' => home_url( '/' ),
 				'strings' => array(
 					'ok'       => __( 'No conflicts detected', 'query2slug' ),
@@ -157,12 +157,12 @@ class Q2S_Admin {
 	 * Register settings for the settings page.
 	 */
 	public function register_settings(): void {
-		register_setting( 'q2s_settings', 'q2s_prefix', array(
+		register_setting( 'q2slug_settings', 'q2slug_prefix', array(
 			'type'              => 'string',
 			'sanitize_callback' => function ( $value ) {
 				$clean = sanitize_title( $value );
 				if ( empty( $clean ) ) {
-					add_settings_error( 'q2s_prefix', 'q2s_prefix_empty', __( 'Prefix cannot be empty. Reset to default.', 'query2slug' ) );
+					add_settings_error( 'q2slug_prefix', 'q2slug_prefix_empty', __( 'Prefix cannot be empty. Reset to default.', 'query2slug' ) );
 					return 'lp';
 				}
 
@@ -170,8 +170,8 @@ class Q2S_Admin {
 				$collision = self::check_prefix_collision( $clean );
 				if ( $collision ) {
 					add_settings_error(
-						'q2s_prefix',
-						'q2s_prefix_collision',
+						'q2slug_prefix',
+						'q2slug_prefix_collision',
 						sprintf(
 							/* translators: 1: prefix, 2: type of collision (e.g. "page", "category") */
 							__( 'Warning: the prefix "%1$s" conflicts with an existing %2$s. This may cause routing issues. Consider using a different prefix.', 'query2slug' ),
@@ -182,17 +182,15 @@ class Q2S_Admin {
 					);
 				}
 
-				set_transient( 'q2s_flush_rewrite', true );
+				set_transient( 'q2slug_flush_rewrite', true );
 				return $clean;
 			},
 			'default'           => 'lp',
 		) );
 
-		register_setting( 'q2s_settings', 'q2s_delete_data', array(
+		register_setting( 'q2slug_settings', 'q2slug_delete_data', array(
 			'type'              => 'boolean',
-			'sanitize_callback' => function ( $value ) {
-				return (bool) $value;
-			},
+			'sanitize_callback' => 'rest_sanitize_boolean',
 			'default'           => false,
 		) );
 	}
@@ -202,17 +200,17 @@ class Q2S_Admin {
 	 */
 	public function handle_form_submissions(): void {
 		// Handle rule save.
-		if ( isset( $_POST['q2s_save_rule'] ) ) {
-			check_admin_referer( 'q2s_save_rule' );
+		if ( isset( $_POST['q2slug_save_rule'] ) ) {
+			check_admin_referer( 'q2slug_save_rule' );
 
 			if ( ! current_user_can( 'manage_options' ) ) {
 				wp_die( esc_html__( 'Unauthorized.', 'query2slug' ) );
 			}
 
-			$id = isset( $_POST['q2s_rule_id'] ) ? absint( $_POST['q2s_rule_id'] ) : 0;
+			$id = isset( $_POST['q2slug_rule_id'] ) ? absint( $_POST['q2slug_rule_id'] ) : 0;
 
-			$filter_keys   = isset( $_POST['q2s_filter_key'] ) && is_array( $_POST['q2s_filter_key'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['q2s_filter_key'] ) ) : array();
-			$filter_values = isset( $_POST['q2s_filter_value'] ) && is_array( $_POST['q2s_filter_value'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['q2s_filter_value'] ) ) : array();
+			$filter_keys   = isset( $_POST['q2slug_filter_key'] ) && is_array( $_POST['q2slug_filter_key'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['q2slug_filter_key'] ) ) : array();
+			$filter_values = isset( $_POST['q2slug_filter_value'] ) && is_array( $_POST['q2slug_filter_value'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['q2slug_filter_value'] ) ) : array();
 
 			$filters = array();
 			foreach ( $filter_keys as $i => $key ) {
@@ -222,38 +220,38 @@ class Q2S_Admin {
 				}
 			}
 
-			$result = Q2S_DB::save_rule( array(
+			$result = Q2SLUG_DB::save_rule( array(
 				'id'      => $id,
-				'slug'    => isset( $_POST['q2s_slug'] ) ? sanitize_text_field( wp_unslash( $_POST['q2s_slug'] ) ) : '',
+				'slug'    => isset( $_POST['q2slug_slug'] ) ? sanitize_text_field( wp_unslash( $_POST['q2slug_slug'] ) ) : '',
 				'filters' => $filters,
-				'status'  => isset( $_POST['q2s_status'] ) ? absint( $_POST['q2s_status'] ) : 1,
+				'status'  => isset( $_POST['q2slug_status'] ) ? absint( $_POST['q2slug_status'] ) : 1,
 			) );
 
 			if ( is_wp_error( $result ) ) {
-				add_settings_error( 'q2s_rule', 'q2s_rule', $result->get_error_message() );
+				add_settings_error( 'q2slug_rule', 'q2slug_rule', $result->get_error_message() );
 				set_transient( 'settings_errors', get_settings_errors(), 30 );
 				wp_safe_redirect( add_query_arg( 'settings-updated', 'false', wp_get_referer() ) );
 				exit;
 			}
 
-			wp_safe_redirect( admin_url( 'admin.php?page=q2s-rules&message=saved' ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=q2slug-rules&message=saved' ) );
 			exit;
 		}
 
 		// Handle rule delete.
-		if ( isset( $_GET['q2s_action'] ) && 'delete' === $_GET['q2s_action'] && isset( $_GET['rule_id'] ) ) {
-			check_admin_referer( 'q2s_delete_' . absint( $_GET['rule_id'] ) );
+		if ( isset( $_GET['q2slug_action'] ) && 'delete' === $_GET['q2slug_action'] && isset( $_GET['rule_id'] ) ) {
+			check_admin_referer( 'q2slug_delete_' . absint( $_GET['rule_id'] ) );
 
 			if ( ! current_user_can( 'manage_options' ) ) {
 				wp_die( esc_html__( 'Unauthorized.', 'query2slug' ) );
 			}
 
-			Q2S_DB::delete_rule( absint( $_GET['rule_id'] ) );
-			wp_safe_redirect( admin_url( 'admin.php?page=q2s-rules&message=deleted' ) );
+			Q2SLUG_DB::delete_rule( absint( $_GET['rule_id'] ) );
+			wp_safe_redirect( admin_url( 'admin.php?page=q2slug-rules&message=deleted' ) );
 			exit;
 		}
 
-		// Bulk actions are handled by Q2S_Rules_Table::process_bulk_action()
+		// Bulk actions are handled by Q2SLUG_Rules_Table::process_bulk_action()
 		// inside prepare_items(), following the standard WP_List_Table pattern.
 	}
 
@@ -264,12 +262,12 @@ class Q2S_Admin {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only display of admin notice type, no state change.
 		$message = isset( $_GET['message'] ) ? sanitize_text_field( wp_unslash( $_GET['message'] ) ) : '';
 
-		$table = new Q2S_Rules_Table();
+		$table = new Q2SLUG_Rules_Table();
 		$table->prepare_items();
 		?>
 		<div class="wrap">
 			<h1 class="wp-heading-inline"><?php esc_html_e( 'Query2Slug Rules', 'query2slug' ); ?></h1>
-			<a href="<?php echo esc_url( admin_url( 'admin.php?page=q2s-edit' ) ); ?>" class="page-title-action">
+			<a href="<?php echo esc_url( admin_url( 'admin.php?page=q2slug-edit' ) ); ?>" class="page-title-action">
 				<?php esc_html_e( 'Add New', 'query2slug' ); ?>
 			</a>
 			<hr class="wp-header-end">
@@ -295,8 +293,8 @@ class Q2S_Admin {
 	public function render_edit_page(): void {
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only: loads rule for editing, no state change.
 		$rule_id = isset( $_GET['rule_id'] ) ? absint( $_GET['rule_id'] ) : 0;
-		$rule    = $rule_id ? Q2S_DB::get_rule( $rule_id ) : null;
-		$prefix  = Q2S_Rewrite::get_prefix();
+		$rule    = $rule_id ? Q2SLUG_DB::get_rule( $rule_id ) : null;
+		$prefix  = Q2SLUG_Rewrite::get_prefix();
 
 		$slug    = $rule ? $rule['slug'] : '';
 		$filters = $rule ? $rule['filters'] : array( '' => '' );
@@ -309,11 +307,11 @@ class Q2S_Admin {
 		<div class="wrap">
 			<h1><?php echo $rule ? esc_html__( 'Edit Rule', 'query2slug' ) : esc_html__( 'Add New Rule', 'query2slug' ); ?></h1>
 
-			<?php settings_errors( 'q2s_rule' ); ?>
+			<?php settings_errors( 'q2slug_rule' ); ?>
 
-			<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=q2s-edit' ) ); ?>" id="q2s-rule-form">
-				<?php wp_nonce_field( 'q2s_save_rule' ); ?>
-				<input type="hidden" name="q2s_rule_id" value="<?php echo esc_attr( $rule_id ); ?>">
+			<form method="post" action="<?php echo esc_url( admin_url( 'admin.php?page=q2slug-edit' ) ); ?>" id="q2slug-rule-form">
+				<?php wp_nonce_field( 'q2slug_save_rule' ); ?>
+				<input type="hidden" name="q2slug_rule_id" value="<?php echo esc_attr( $rule_id ); ?>">
 
 				<div id="poststuff">
 					<div id="post-body" class="metabox-holder columns-2">
@@ -324,10 +322,10 @@ class Q2S_Admin {
 							<!-- Slug field (title-like) -->
 							<div id="titlediv">
 								<div id="titlewrap">
-									<label class="screen-reader-text" for="q2s_slug"><?php esc_html_e( 'Slug', 'query2slug' ); ?></label>
+									<label class="screen-reader-text" for="q2slug_slug"><?php esc_html_e( 'Slug', 'query2slug' ); ?></label>
 									<input type="text"
-										   id="q2s_slug"
-										   name="q2s_slug"
+										   id="q2slug_slug"
+										   name="q2slug_slug"
 										   value="<?php echo esc_attr( $slug ); ?>"
 										   class="large-text"
 										   required
@@ -336,10 +334,10 @@ class Q2S_Admin {
 										   autocomplete="off">
 								</div>
 								<div class="inside">
-									<span id="q2s-slug-status"></span>
-									<span id="q2s-slug-sanitized" class="q2s-slug-sanitized-hidden"></span>
-									<p id="q2s-url-preview">
-										<?php echo esc_html( home_url( '/' . $prefix . '/' ) ); ?><strong id="q2s-slug-preview"><?php echo esc_html( $slug ?: '...' ); ?></strong>/
+									<span id="q2slug-slug-status"></span>
+									<span id="q2slug-slug-sanitized" class="q2slug-slug-sanitized-hidden"></span>
+									<p id="q2slug-url-preview">
+										<?php echo esc_html( home_url( '/' . $prefix . '/' ) ); ?><strong id="q2slug-slug-preview"><?php echo esc_html( $slug ?: '...' ); ?></strong>/
 									</p>
 								</div>
 							</div>
@@ -351,26 +349,26 @@ class Q2S_Admin {
 								</div>
 								<div class="inside">
 									<p class="description"><?php esc_html_e( 'Define the query parameters this slug will resolve to. Start typing to see available taxonomies and terms.', 'query2slug' ); ?></p>
-									<div id="q2s-filters-container">
+									<div id="q2slug-filters-container">
 										<?php foreach ( $filters as $key => $value ) : ?>
-											<div class="q2s-filter-row">
+											<div class="q2slug-filter-row">
 												<input type="text"
-													   name="q2s_filter_key[]"
+													   name="q2slug_filter_key[]"
 													   value="<?php echo esc_attr( $key ); ?>"
 													   placeholder="<?php esc_attr_e( 'Parameter (e.g. product_cat)', 'query2slug' ); ?>"
-													   class="regular-text q2s-filter-key">
-												<span class="q2s-filter-eq">=</span>
+													   class="regular-text q2slug-filter-key">
+												<span class="q2slug-filter-eq">=</span>
 												<input type="text"
-													   name="q2s_filter_value[]"
+													   name="q2slug_filter_value[]"
 													   value="<?php echo esc_attr( $value ); ?>"
 													   placeholder="<?php esc_attr_e( 'Value (e.g. t-shirt)', 'query2slug' ); ?>"
-													   class="regular-text q2s-filter-value">
-												<button type="button" class="button q2s-remove-filter" title="<?php esc_attr_e( 'Remove', 'query2slug' ); ?>">&minus;</button>
+													   class="regular-text q2slug-filter-value">
+												<button type="button" class="button q2slug-remove-filter" title="<?php esc_attr_e( 'Remove', 'query2slug' ); ?>">&minus;</button>
 											</div>
 										<?php endforeach; ?>
 									</div>
 									<p>
-										<button type="button" class="button" id="q2s-add-filter">
+										<button type="button" class="button" id="q2slug-add-filter">
 											<?php esc_html_e( '+ Add Filter', 'query2slug' ); ?>
 										</button>
 									</p>
@@ -387,10 +385,10 @@ class Q2S_Admin {
 								</div>
 								<div class="inside">
 									<div class="misc-pub-section">
-										<label for="q2s_status">
+										<label for="q2slug_status">
 											<strong><?php esc_html_e( 'Status:', 'query2slug' ); ?></strong>
 										</label>
-										<select name="q2s_status" id="q2s_status">
+										<select name="q2slug_status" id="q2slug_status">
 											<option value="1" <?php selected( $status, 1 ); ?>><?php esc_html_e( 'Active', 'query2slug' ); ?></option>
 											<option value="0" <?php selected( $status, 0 ); ?>><?php esc_html_e( 'Inactive', 'query2slug' ); ?></option>
 										</select>
@@ -398,7 +396,7 @@ class Q2S_Admin {
 								</div>
 								<div id="major-publishing-actions">
 									<div id="publishing-action">
-										<?php submit_button( $rule ? __( 'Update Rule', 'query2slug' ) : __( 'Save Rule', 'query2slug' ), 'primary', 'q2s_save_rule', false ); ?>
+										<?php submit_button( $rule ? __( 'Update Rule', 'query2slug' ) : __( 'Save Rule', 'query2slug' ), 'primary', 'q2slug_save_rule', false ); ?>
 									</div>
 									<div class="clear"></div>
 								</div>
@@ -416,23 +414,23 @@ class Q2S_Admin {
 	 * Render the settings page.
 	 */
 	public function render_settings_page(): void {
-		$prefix      = get_option( 'q2s_prefix', 'lp' );
-		$delete_data = get_option( 'q2s_delete_data', false );
-		$rule_count  = count( Q2S_DB::get_rules() );
-		$active      = count( Q2S_DB::get_rules( 1 ) );
+		$prefix      = get_option( 'q2slug_prefix', 'lp' );
+		$delete_data = get_option( 'q2slug_delete_data', false );
+		$rule_count  = count( Q2SLUG_DB::get_rules() );
+		$active      = count( Q2SLUG_DB::get_rules( 1 ) );
 		?>
 		<div class="wrap">
 			<h1><?php esc_html_e( 'Query2Slug Settings', 'query2slug' ); ?></h1>
 
-			<?php settings_errors( 'q2s_prefix' ); ?>
+			<?php settings_errors( 'q2slug_prefix' ); ?>
 
 			<div id="poststuff">
 				<div id="post-body" class="metabox-holder columns-2">
 
 					<!-- Main content -->
 					<div id="post-body-content">
-						<form method="post" action="options.php" id="q2s-settings-form">
-							<?php settings_fields( 'q2s_settings' ); ?>
+						<form method="post" action="options.php" id="q2slug-settings-form">
+							<?php settings_fields( 'q2slug_settings' ); ?>
 
 							<!-- URL Prefix -->
 							<div class="postbox">
@@ -446,18 +444,18 @@ class Q2S_Admin {
 									<table class="form-table" role="presentation">
 										<tr>
 											<th scope="row">
-												<label for="q2s_prefix"><?php esc_html_e( 'Prefix', 'query2slug' ); ?></label>
+												<label for="q2slug_prefix"><?php esc_html_e( 'Prefix', 'query2slug' ); ?></label>
 											</th>
 											<td>
 												<input type="text"
-													   id="q2s_prefix"
-													   name="q2s_prefix"
+													   id="q2slug_prefix"
+													   name="q2slug_prefix"
 													   value="<?php echo esc_attr( $prefix ); ?>"
 													   class="regular-text"
 													   required>
-												<span id="q2s-prefix-status" class="q2s-prefix-status"></span>
-												<p class="description" id="q2s-prefix-example">
-													<?php echo esc_html( home_url( '/' ) ); ?><strong id="q2s-prefix-preview"><?php echo esc_html( $prefix ); ?></strong>/your-slug/
+												<span id="q2slug-prefix-status" class="q2slug-prefix-status"></span>
+												<p class="description" id="q2slug-prefix-example">
+													<?php echo esc_html( home_url( '/' ) ); ?><strong id="q2slug-prefix-preview"><?php echo esc_html( $prefix ); ?></strong>/your-slug/
 												</p>
 											</td>
 										</tr>
@@ -478,10 +476,10 @@ class Q2S_Admin {
 											</th>
 											<td>
 												<fieldset>
-													<label for="q2s_delete_data">
+													<label for="q2slug_delete_data">
 														<input type="checkbox"
-															   id="q2s_delete_data"
-															   name="q2s_delete_data"
+															   id="q2slug_delete_data"
+															   name="q2slug_delete_data"
 															   value="1"
 															   <?php checked( $delete_data ); ?>>
 														<?php esc_html_e( 'Delete all data on uninstall', 'query2slug' ); ?>
@@ -507,7 +505,7 @@ class Q2S_Admin {
 								<h2><?php esc_html_e( 'Overview', 'query2slug' ); ?></h2>
 							</div>
 							<div class="inside">
-								<ul class="q2s-overview-list">
+								<ul class="q2slug-overview-list">
 									<li>
 										<span class="dashicons dashicons-admin-links"></span>
 										<?php
@@ -519,7 +517,7 @@ class Q2S_Admin {
 										?>
 									</li>
 									<li>
-										<span class="dashicons dashicons-yes-alt q2s-status-active"></span>
+										<span class="dashicons dashicons-yes-alt q2slug-status-active"></span>
 										<?php
 										printf(
 											/* translators: %d: number of active rules */
@@ -529,7 +527,7 @@ class Q2S_Admin {
 										?>
 									</li>
 									<li>
-										<span class="dashicons dashicons-marker q2s-status-inactive"></span>
+										<span class="dashicons dashicons-marker q2slug-status-inactive"></span>
 										<?php
 										printf(
 											/* translators: %d: number of inactive rules */
@@ -540,7 +538,7 @@ class Q2S_Admin {
 									</li>
 								</ul>
 								<p>
-									<a href="<?php echo esc_url( admin_url( 'admin.php?page=q2s-rules' ) ); ?>" class="button button-secondary" style="width:100%;text-align:center;">
+									<a href="<?php echo esc_url( admin_url( 'admin.php?page=q2slug-rules' ) ); ?>" class="button button-secondary" style="width:100%;text-align:center;">
 										<?php esc_html_e( 'Manage Rules', 'query2slug' ); ?>
 									</a>
 								</p>
@@ -621,7 +619,7 @@ class Q2S_Admin {
 	 * Check if a slug is available.
 	 */
 	public function ajax_check_slug(): void {
-		check_ajax_referer( 'q2s_admin' );
+		check_ajax_referer( 'q2slug_admin' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( 'Unauthorized', 403 );
@@ -634,7 +632,7 @@ class Q2S_Admin {
 			wp_send_json_error( __( 'Slug cannot be empty.', 'query2slug' ) );
 		}
 
-		$existing = Q2S_DB::get_rule_by_slug( $slug );
+		$existing = Q2SLUG_DB::get_rule_by_slug( $slug );
 
 		if ( $existing && $existing['id'] !== $rule_id ) {
 			wp_send_json_error( __( 'This slug is already in use.', 'query2slug' ) );
@@ -647,7 +645,7 @@ class Q2S_Admin {
 	 * Toggle a rule's active/inactive status.
 	 */
 	public function ajax_toggle_status(): void {
-		check_ajax_referer( 'q2s_admin' );
+		check_ajax_referer( 'q2slug_admin' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( 'Unauthorized', 403 );
@@ -659,9 +657,9 @@ class Q2S_Admin {
 			wp_send_json_error( __( 'Invalid rule ID.', 'query2slug' ) );
 		}
 
-		Q2S_DB::toggle_status( $rule_id );
+		Q2SLUG_DB::toggle_status( $rule_id );
 
-		$rule = Q2S_DB::get_rule( $rule_id );
+		$rule = Q2SLUG_DB::get_rule( $rule_id );
 		wp_send_json_success( array( 'status' => $rule ? $rule['status'] : 0 ) );
 	}
 
@@ -669,7 +667,7 @@ class Q2S_Admin {
 	 * Get registered taxonomies for autocomplete.
 	 */
 	public function ajax_get_taxonomies(): void {
-		check_ajax_referer( 'q2s_admin' );
+		check_ajax_referer( 'q2slug_admin' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( 'Unauthorized', 403 );
@@ -698,7 +696,7 @@ class Q2S_Admin {
 	 * Get terms for a given taxonomy (for value autocomplete).
 	 */
 	public function ajax_get_terms(): void {
-		check_ajax_referer( 'q2s_admin' );
+		check_ajax_referer( 'q2slug_admin' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( 'Unauthorized', 403 );
@@ -737,7 +735,7 @@ class Q2S_Admin {
 	 * Check if a prefix collides with existing WP content (real-time).
 	 */
 	public function ajax_check_prefix(): void {
-		check_ajax_referer( 'q2s_admin' );
+		check_ajax_referer( 'q2slug_admin' );
 
 		if ( ! current_user_can( 'manage_options' ) ) {
 			wp_send_json_error( 'Unauthorized', 403 );

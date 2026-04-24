@@ -3,6 +3,7 @@
 .forgejo
 .github-exclude
 .gitignore
+.gitattributes
 .distignore
 .wp-env.json
 node_modules
