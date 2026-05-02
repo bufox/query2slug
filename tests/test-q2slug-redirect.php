@@ -166,18 +166,46 @@ class Test_Q2SLUG_Redirect extends WP_UnitTestCase {
 		$this->assertStringContainsString( 'fbclid=abc123', $caught->location );
 	}
 
-	public function test_redirect_url_encoded_values(): void {
+	public function test_no_double_decoding(): void {
+		// A literal percent sequence in $_GET (which PHP would have already
+		// decoded for real requests) must not be silently re-decoded here.
 		Q2SLUG_DB::save_rule( array(
 			'slug'    => 'encoded-test',
 			'filters' => array( 'product_tag' => 'walt-disney' ),
 			'status'  => 1,
 		) );
 
-		// %2D is a URL-encoded hyphen.
-		$caught = $this->do_redirect( array( 'product_tag' => 'walt%2Ddisney' ) );
+		// 'walt%2Ddisney' should NOT match a rule for 'walt-disney'.
+		$this->assert_no_redirect( array( 'product_tag' => 'walt%2Ddisney' ) );
+	}
+
+	public function test_redirect_unslashes_input_values(): void {
+		Q2SLUG_DB::save_rule( array(
+			'slug'    => 'quoted-tag',
+			'filters' => array( 'product_tag' => "kid's" ),
+			'status'  => 1,
+		) );
+
+		$caught = $this->do_redirect( array( 'product_tag' => 'kid\\\'s' ) );
 
 		$this->assertSame( 301, $caught->status );
-		$this->assertStringContainsString( '/lp/encoded-test/', $caught->location );
+		$this->assertStringContainsString( '/lp/quoted-tag/', $caught->location );
+	}
+
+	public function test_redirect_ignores_array_params(): void {
+		Q2SLUG_DB::save_rule( array(
+			'slug'    => 'array-safe',
+			'filters' => array( 'category_name' => 'tees' ),
+			'status'  => 1,
+		) );
+
+		$caught = $this->do_redirect( array(
+			'category_name' => 'tees',
+			'product_tag'   => array( 'disney' ),
+		) );
+
+		$this->assertSame( 301, $caught->status );
+		$this->assertStringContainsString( '/lp/array-safe/', $caught->location );
 	}
 
 	public function test_no_redirect_when_no_matching_rule(): void {

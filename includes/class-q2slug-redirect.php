@@ -37,12 +37,17 @@ class Q2SLUG_Redirect {
 
 	/**
 	 * If the current request's query params match a rule, redirect to the canonical slug URL.
+	 *
+	 * Nonce verification does not apply here: this is a public-facing canonical
+	 * redirect that runs on every front-end request. Visitors arriving from
+	 * external sources (paid ads, search engines, shared links) cannot carry
+	 * nonces. The handler performs no state changes — it only inspects
+	 * sanitized query parameters and, on a match, issues a 301 to the canonical
+	 * URL. This mirrors WordPress core's own redirect_canonical() behavior.
 	 */
 	public function maybe_redirect(): void {
-		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Read-only check of public query params, no state change.
-		$request_params = $_GET;
-
-		if ( empty( $request_params ) ) {
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public canonical redirect, see method docblock.
+		if ( empty( $_GET ) ) {
 			return;
 		}
 
@@ -50,9 +55,16 @@ class Q2SLUG_Redirect {
 		$tracking_params = array();
 		$filter_params   = array();
 
-		foreach ( $request_params as $key => $value ) {
-			$clean_key   = sanitize_text_field( urldecode( $key ) );
-			$clean_value = sanitize_text_field( urldecode( $value ) );
+		// phpcs:ignore WordPress.Security.NonceVerification.Recommended -- Public canonical redirect, see method docblock.
+		$raw_params = wp_unslash( $_GET );
+
+		foreach ( $raw_params as $key => $value ) {
+			if ( ! is_string( $key ) || ! is_string( $value ) ) {
+				continue;
+			}
+
+			$clean_key   = sanitize_text_field( $key );
+			$clean_value = sanitize_text_field( $value );
 
 			if ( in_array( strtolower( $clean_key ), self::TRACKING_PARAMS, true ) ) {
 				$tracking_params[ $clean_key ] = $clean_value;
