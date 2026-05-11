@@ -6,6 +6,7 @@
 .gitattributes
 .distignore
 .wp-env.json
+scripts
 node_modules
 vendor
 tests
@@ -13,6 +14,7 @@ phpunit.xml
 composer.json
 composer.lock
 Makefile
+Makefile.local
 REQUIREMENTS.md
 WP-STANDARDS.md
 CLAUDE.md

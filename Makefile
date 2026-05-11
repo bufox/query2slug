@@ -20,3 +20,6 @@ seed:
 
 seed-images:
 	$(WP) eval-file /var/www/html/wp-content/plugins/query2slug/tests/seed-images.php
+
+# Optional local overrides (silently ignored if absent).
+-include Makefile.local
